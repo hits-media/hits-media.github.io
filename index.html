@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punch Game Demo</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  h1 { font-size: 28px; }
+
+  #score {
+    font-size: 64px;
+    margin: 20px;
+    letter-spacing: 6px;
+  }
+
+  #status {
+    opacity: 0.8;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 12px 20px;
+    margin: 6px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .primary { background: #22c55e; color: black; }
+  .secondary { background: #334155; color: white; }
+</style>
+</head>
+
+<body>
+
+<h1>🥊 Punch Game</h1>
+<div id="score">0000</div>
+<div id="status">Hazır</div>
+
+<button class="primary" onclick="requestPermission()">Başlat</button>
+<button class="secondary" onclick="calibrate()">Kalibrasyon</button>
+
+<script>
+let baseline = 0;
+let lastAccel = 0;
+let lastTime = 0;
+
+let state = "idle";
+let peakAccel = 0;
+let peakGyro = 0;
+let jerkPeak = 0;
+let startTime = 0;
+
+// 📱 İzin (iOS için gerekli)
+function requestPermission() {
+  if (typeof DeviceMotionEvent !== "undefined" &&
+      typeof DeviceMotionEvent.requestPermission === "function") {
+    DeviceMotionEvent.requestPermission()
+      .then(res => {
+        if (res === "granted") start();
+      });
+  } else {
+    start();
+  }
+}
+
+function start() {
+  document.getElementById("status").innerText = "Hazır - geri çek";
+  window.addEventListener("devicemotion", handleMotion);
+}
+
+// ⚙️ Kalibrasyon
+function calibrate() {
+  baseline = lastAccel;
+  document.getElementById("status").innerText = "Kalibre edildi";
+}
+
+// 🧠 Ana sensör işleme
+function handleMotion(e) {
+  let now = Date.now();
+
+  let acc = e.accelerationIncludingGravity;
+  if (!acc) return;
+
+  let gyro = e.rotationRate || { alpha: 0, beta: 0, gamma: 0 };
+
+  let ax = acc.x || 0;
+  let gx = gyro.beta || 0;
+
+  let dt = (now - lastTime) / 1000 || 0.016;
+
+  let normAccel = ax - baseline;
+
+  // jerk
+  let jerk = (normAccel - lastAccel) / dt;
+
+  lastAccel = normAccel;
+  lastTime = now;
+
+  // 🎯 STATE MACHINE
+  if (state === "idle") {
+    if (normAccel < -3) {
+      state = "pullback";
+      document.getElementById("status").innerText = "Geri çekildi";
+    }
+  }
+
+  else if (state === "pullback") {
+    if (normAccel > 8) {
+      state = "forward";
+      peakAccel = normAccel;
+      peakGyro = Math.abs(gx);
+      jerkPeak = Math.abs(jerk);
+      startTime = now;
+    }
+  }
+
+  else if (state === "forward") {
+    peakAccel = Math.max(peakAccel, normAccel);
+    peakGyro = Math.max(peakGyro, Math.abs(gx));
+    jerkPeak = Math.max(jerkPeak, Math.abs(jerk));
+
+    if (normAccel < 2) {
+      let duration = now - startTime;
+
+      let score = calculateScore(peakAccel, peakGyro, jerkPeak, duration);
+
+      if (score > 0) {
+        showScore(score);
+      }
+
+      reset();
+    }
+  }
+}
+
+// 🔢 Skor hesaplama
+function calculateScore(acc, gyro, jerk, duration) {
+
+  // fake engelleme
+  if (duration < 50 || duration > 400) return 0;
+  if (gyro < 20) return 0;
+
+  let raw =
+    acc * 0.6 +
+    gyro * 0.2 +
+    jerk * 0.15 +
+    (200 / duration) * 0.05;
+
+  let K = 20;
+
+  let score = 9999 * (1 - Math.exp(-raw / K));
+
+  return Math.min(9999, Math.floor(score));
+}
+
+// 🎮 Skor gösterimi
+function showScore(val) {
+  let scoreEl = document.getElementById("score");
+  scoreEl.innerText = val.toString().padStart(4, "0");
+
+  document.getElementById("status").innerText =
+    val > 8000 ? "🔥 EFSANE!" :
+    val > 5000 ? "💪 Güçlü!" :
+    val > 2000 ? "👍 Fena değil" :
+    "😅 Tekrar dene";
+}
+
+// 🔄 reset
+function reset() {
+  state = "idle";
+  peakAccel = 0;
+  peakGyro = 0;
+  jerkPeak = 0;
+  startTime = 0;
+
+  document.getElementById("status").innerText = "Hazır - geri çek";
+}
+</script>
+
+</body>
+</html>
