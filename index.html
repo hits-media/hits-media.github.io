@@ -2,201 +2,380 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>🥊 Punch Machine S22 Optimized</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+<meta name="theme-color" content="#0a0a1a">
+<title>🥊 Punch Machine Ultra</title>
 <style>
+:root {
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #1a1a3a;
+  --accent-green: #22c55e;
+  --accent-orange: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-blue: #60a5fa;
+  --accent-purple: #a78bfa;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.7);
+  --card-bg: rgba(30, 30, 60, 0.7);
+  --card-border: rgba(100, 150, 255, 0.3);
+  --glow-green: 0 0 25px rgba(34, 197, 94, 0.5);
+  --glow-red: 0 0 30px rgba(239, 68, 68, 0.6);
+}
+
 * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+@font-face {
+  font-family: 'ScoreFont';
+  src: local('Arial Black'), local('Impact'), sans-serif;
+  font-weight: 900;
+}
+
 body {
   margin: 0;
-  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0f0f2a 100%);
-  color: white;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(ellipse at top, #1a1a4a 0%, var(--bg-primary) 60%);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
-  padding: 12px;
+  padding: 16px 12px;
   overflow-x: hidden;
 }
 
-.container { width: 100%; max-width: 420px; text-align: center; }
+.container { width: 100%; max-width: 440px; text-align: center; }
 
-header { margin-bottom: 15px; }
+/* Header */
+header { margin: 8px 0 12px; animation: fadeInDown 0.5s ease; }
+@keyframes fadeInDown { from { opacity:0; transform:translateY(-20px) } to { opacity:1; transform:translateY(0) } }
+
 h1 {
-  font-size: 24px; margin: 0 0 5px 0;
-  background: linear-gradient(90deg, #ff6b6b, #ffa500);
+  font-size: 26px; margin: 0 0 4px 0; font-weight: 800;
+  background: linear-gradient(135deg, #ff6b6b 0%, #f59e0b 35%, #22c55e 70%, #60a5fa 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  animation: glow 2s ease-in-out infinite;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  animation: rainbow 4s linear infinite;
+  background-size: 300% 300%;
 }
-@keyframes glow { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.2)} }
-.subtitle { opacity:0.7; font-size:13px; margin:0; }
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-/* Score Display */
-.score-container {
-  margin: 10px 0 15px; padding: 15px;
-  background: rgba(30,30,60,0.6); border-radius: 16px;
-  border: 2px solid rgba(100,150,255,0.3);
-  box-shadow: 0 0 25px rgba(100,150,255,0.15);
-}
-#score {
-  font-size: 64px; font-weight: 800; font-variant-numeric: tabular-nums;
-  letter-spacing: -2px; margin: 0;
-  text-shadow: 0 0 15px rgba(255,107,107,0.7);
-  transition: transform 0.1s ease;
-}
-#score.punch { animation: punchAnim 0.25s ease-out; }
-@keyframes punchAnim {
-  0%{transform:scale(1)} 50%{transform:scale(1.12) rotate(-1.5deg)} 100%{transform:scale(1)}
-}
-.score-label { font-size:11px; opacity:0.6; margin-top:3px; text-transform:uppercase; letter-spacing:1.5px; }
-
-/* Status */
-#status {
-  font-size: 14px; padding: 8px 16px;
-  background: rgba(50,50,90,0.5); border-radius: 24px;
-  margin: 10px 0; min-height: 36px;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
-.status-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #666; transition: background 0.3s;
-}
-.status-dot.ready { background:#22c55e; box-shadow:0 0 8px #22c55e; }
-.status-dot.armed { background:#f59e0b; box-shadow:0 0 8px #f59e0b; }
-.status-dot.punching { background:#ef4444; box-shadow:0 0 12px #ef4444; }
-
-/* Debug Panel */
-.debug-panel {
-  background: rgba(25,25,50,0.7); border-radius: 12px;
-  padding: 10px; margin: 10px 0; font-size: 11px;
-  border: 1px solid rgba(100,150,255,0.2);
-}
-.debug-title {
-  font-size: 12px; font-weight: 600; margin-bottom: 8px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.debug-toggle {
-  background: rgba(100,116,139,0.3); border: none; color: white;
-  padding: 3px 10px; border-radius: 8px; font-size: 10px; cursor: pointer;
-}
-.debug-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 6px;
-}
-.debug-item {
-  background: rgba(40,40,75,0.4); padding: 6px 4px; border-radius: 8px;
-}
-.debug-label { opacity:0.5; font-size: 9px; display:block; margin-bottom:2px; }
-.debug-value { font-weight: 600; font-size: 13px; color: #60a5fa; }
-.debug-value.active { color: #fbbf24; }
-
-/* Visual */
-.punch-visual {
-  width: 100px; height: 100px; margin: 12px auto; position: relative;
-}
-.punch-ring {
-  position: absolute; width: 100%; height: 100%;
-  border: 2px solid rgba(100,150,255,0.25); border-radius: 50%;
-  animation: pulse 1.8s infinite;
-}
-.punch-ring:nth-child(2){animation-delay:0.4s}
-.punch-ring:nth-child(3){animation-delay:0.8s}
-@keyframes pulse { 0%{transform:scale(0.85);opacity:1} 100%{transform:scale(1.4);opacity:0} }
-.punch-center {
-  position: absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width: 32px; height: 32px;
-  background: radial-gradient(circle,#ff6b6b,#ef4444); border-radius: 50%;
-  box-shadow: 0 0 20px rgba(239,68,68,0.5); transition: transform 0.08s ease;
-}
-.punch-center.active { animation: hitFlash 0.15s ease-out; }
-@keyframes hitFlash { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.35)} }
-
-/* Buttons */
-.btn-group { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 12px 0; }
-button {
-  padding: 12px 18px; border: none; border-radius: 12px;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  transition: all 0.15s; min-width: 100px;
-}
-button:active { transform: scale(0.97); }
-.primary {
-  background: linear-gradient(135deg,#22c55e,#16a34a); color: white;
-  box-shadow: 0 3px 15px rgba(34,197,94,0.35);
-}
-.primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
-.secondary {
-  background: rgba(100,116,139,0.25); color: white;
-  border: 1px solid rgba(100,116,139,0.4);
-}
-.danger { background: linear-gradient(135deg,#ef4444,#dc2626); color: white; }
-
-/* History */
-.history { margin-top: 15px; width: 100%; }
-.history h3 { font-size: 12px; opacity:0.7; margin:0 0 8px 0; text-transform:uppercase; letter-spacing:1px; }
-.history-list { display: flex; gap: 6px; overflow-x: auto; padding: 3px 0; scrollbar-width:none; }
-.history-list::-webkit-scrollbar { display:none; }
-.history-item {
-  flex:0 0 auto; padding: 8px 12px; background: rgba(50,50,90,0.35);
-  border-radius: 8px; text-align: center; min-width: 60px;
-}
-.history-item.best { border:2px solid #fbbf24; background:rgba(251,191,36,0.12); }
-.history-score { font-size: 17px; font-weight: 700; color: #60a5fa; }
-.history-time { font-size: 9px; opacity:0.5; margin-top: 2px; }
-
-/* Instructions */
-.instructions {
-  margin-top: 12px; padding: 10px 12px;
-  background: rgba(40,50,80,0.25); border-radius: 10px;
-  font-size: 11px; line-height: 1.4; text-align: left;
-}
-.instructions ol { margin: 8px 0 0 18px; padding: 0; }
-.instructions li { margin: 3px 0; }
-
-/* Modal */
-.modal {
-  position: fixed; top:0; left:0; right:0; bottom:0;
-  background: rgba(0,0,0,0.88); display: flex;
-  align-items: center; justify-content: center; z-index: 1000; padding: 20px;
-}
-.modal.hidden { display: none; }
-.modal-content {
-  background: linear-gradient(135deg,#1e1e3f,#2a2a5a);
-  padding: 20px; border-radius: 16px; max-width: 320px;
-  text-align: center; border: 1px solid rgba(100,150,255,0.25);
-}
-.modal h3 { margin: 0 0 12px 0; font-size: 18px; }
-.modal p { opacity: 0.85; font-size: 13px; margin: 0 0 16px 0; line-height: 1.4; }
-.modal-buttons { display: flex; gap: 8px; justify-content: center; }
-
-/* Calibration */
-.calibration-overlay {
-  position: fixed; top:0; left:0; right:0; bottom:0;
-  background: rgba(10,10,30,0.96); display: flex;
-  flex-direction: column; align-items: center; justify-content: center;
-  z-index: 500; padding: 25px;
-}
-.calibration-overlay.hidden { display: none; }
-.calibration-progress {
-  width: 160px; height: 160px;
-  border: 3px solid rgba(100,150,255,0.25); border-top-color: #60a5fa;
-  border-radius: 50%; animation: spin 0.9s linear infinite; margin: 15px 0;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+.subtitle { opacity: 0.75; font-size: 13px; margin: 0; font-weight: 400; }
 
 /* HTTPS Warning */
 .https-warning {
-  background: linear-gradient(135deg,#dc2626,#b91c1c);
-  color: white; padding: 10px 15px; border-radius: 10px;
-  margin: 10px 0; font-size: 12px; text-align: center;
-  display: none;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: white; padding: 10px 14px; border-radius: 12px;
+  margin: 8px 0 12px; font-size: 12px; text-align: center;
+  display: none; animation: slideIn 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
 }
 .https-warning.show { display: block; }
+@keyframes slideIn { from { opacity:0; transform:translateY(-10px) } to { opacity:1; transform:translateY(0) } }
 
-@media (max-height: 650px) {
-  .score-container { margin: 8px 0 12px; padding: 12px; }
-  #score { font-size: 52px; }
-  .debug-grid { gap: 4px; }
-  .debug-value { font-size: 12px; }
+/* Score Display - Premium Look */
+.score-container {
+  margin: 8px 0 14px; padding: 18px 20px;
+  background: linear-gradient(145deg, var(--card-bg), rgba(25,25,55,0.8));
+  border-radius: 20px; border: 1px solid var(--card-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), var(--glow-green);
+  position: relative; overflow: hidden;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+
+.score-container::before {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(100,200,255,0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer { 100% { left: 100%; } }
+
+#score {
+  font-family: 'ScoreFont', 'Arial Black', Impact, sans-serif;
+  font-size: 72px; font-weight: 900; font-variant-numeric: tabular-nums;
+  letter-spacing: -4px; margin: 0; line-height: 1;
+  text-shadow: 0 0 20px rgba(255,107,107,0.8), 0 0 40px rgba(255,107,107,0.4);
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: linear-gradient(180deg, #fff 0%, #ffb3b3 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+#score.punch { 
+  animation: punchImpact 0.25s cubic-bezier(0.36, 0, 0.66, -0.56);
+  text-shadow: 0 0 30px rgba(255,107,107,1), 0 0 60px rgba(255,107,107,0.6);
+}
+@keyframes punchImpact {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.18) rotate(-2deg); }
+  50% { transform: scale(0.95) rotate(1deg); }
+  75% { transform: scale(1.05) rotate(-0.5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.score-label {
+  font-size: 11px; opacity: 0.65; margin-top: 6px;
+  text-transform: uppercase; letter-spacing: 2.5px; font-weight: 500;
+}
+
+.score-badge {
+  display: inline-block; padding: 4px 12px; margin-top: 8px;
+  background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 20px; font-size: 11px; color: var(--accent-green);
+}
+
+/* Status Bar */
+#status {
+  font-size: 14px; padding: 9px 18px;
+  background: rgba(45, 45, 85, 0.6); border-radius: 28px;
+  margin: 8px 0 12px; min-height: 38px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid rgba(100, 150, 255, 0.25);
+  transition: all 0.2s ease;
+}
+#status.punch-active {
+  background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(245,158,11,0.2));
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+.status-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #555; transition: all 0.3s ease;
+  box-shadow: 0 0 8px currentColor;
+}
+.status-dot.ready { background: var(--accent-green); color: var(--accent-green); }
+.status-dot.punching { background: var(--accent-red); color: var(--accent-red); animation: pulse 0.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+/* Punch Visual - Impact Effect */
+.punch-visual {
+  width: 140px; height: 140px; margin: 8px auto 14px;
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.punch-ring {
+  position: absolute; width: 100%; height: 100%;
+  border: 2px solid rgba(100, 150, 255, 0.2); border-radius: 50%;
+  animation: ringPulse 2s ease-out infinite;
+}
+.punch-ring:nth-child(2){ animation-delay: 0.4s; border-color: rgba(167, 139, 250, 0.25); }
+.punch-ring:nth-child(3){ animation-delay: 0.8s; border-color: rgba(34, 197, 94, 0.2); }
+@keyframes ringPulse {
+  0% { transform: scale(0.7); opacity: 0.8; }
+  60% { transform: scale(1.2); opacity: 0.3; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.punch-center {
+  position: relative; width: 48px; height: 48px;
+  background: radial-gradient(circle at 30% 30%, #ff8a8a, #ef4444 60%, #b91c1c);
+  border-radius: 50%; z-index: 2;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.7), inset 0 -3px 10px rgba(0,0,0,0.3);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.punch-center::after {
+  content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px;
+  background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.4), transparent);
+  border-radius: 50%;
+}
+.punch-center.active {
+  animation: hitImpact 0.18s cubic-bezier(0.36, 0, 0.66, -0.56);
+  box-shadow: 0 0 40px rgba(239, 68, 68, 1), 0 0 80px rgba(255, 107, 107, 0.8);
+}
+@keyframes hitImpact {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.45); }
+  60% { transform: scale(0.92); }
+  80% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Impact Particles */
+.punch-particles {
+  position: absolute; top: 50%; left: 50%;
+  width: 200px; height: 200px; transform: translate(-50%, -50%);
+  pointer-events: none; opacity: 0; transition: opacity 0.1s;
+}
+.punch-particles.active { opacity: 1; }
+.particle {
+  position: absolute; width: 6px; height: 6px;
+  background: radial-gradient(circle, #fff, #ff6b6b);
+  border-radius: 50%; animation: particleFly 0.6s ease-out forwards;
+}
+@keyframes particleFly {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.2); opacity: 0; }
+}
+
+/* Stats Grid - All Axes */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  margin: 10px 0 14px;
+}
+.stat-card {
+  background: linear-gradient(145deg, rgba(35,35,70,0.6), rgba(25,25,55,0.5));
+  padding: 10px 6px; border-radius: 14px; border: 1px solid rgba(100,150,255,0.2);
+  transition: transform 0.15s ease, border-color 0.2s;
+}
+.stat-card.active { 
+  border-color: var(--accent-orange); 
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+}
+.stat-value {
+  font-size: 16px; font-weight: 700; color: var(--accent-blue);
+  display: block; margin-bottom: 2px; font-variant-numeric: tabular-nums;
+}
+.stat-label { font-size: 9px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-unit { font-size: 8px; opacity: 0.4; margin-left: 2px; }
+
+/* Buttons */
+.btn-group { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 12px 0 16px; }
+button {
+  padding: 13px 20px; border: none; border-radius: 14px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 95px; position: relative; overflow: hidden;
+}
+button::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.4s;
+}
+button:active::after { left: 100%; }
+button:active { transform: scale(0.96); }
+
+.primary {
+  background: linear-gradient(135deg, var(--accent-green), #15803d);
+  color: white; box-shadow: 0 4px 20px rgba(34, 197, 94, 0.45);
+}
+.primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+.primary:hover:not(:disabled) { box-shadow: 0 6px 28px rgba(34, 197, 94, 0.6); }
+
+.secondary {
+  background: linear-gradient(135deg, rgba(100,116,139,0.25), rgba(70,85,110,0.2));
+  color: white; border: 1px solid rgba(100,116,139,0.45);
+}
+.secondary:hover { border-color: rgba(100,150,255,0.7); background: rgba(100,116,139,0.35); }
+
+.danger { background: linear-gradient(135deg, var(--accent-red), #b91c1c); color: white; }
+
+/* History */
+.history { margin-top: 12px; width: 100%; animation: fadeInUp 0.4s ease 0.1s both; }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(15px) } to { opacity:1; transform:translateY(0) } }
+
+.history h3 {
+  font-size: 12px; opacity: 0.7; margin: 0 0 9px 0;
+  text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+.history-list {
+  display: flex; gap: 7px; overflow-x: auto; padding: 4px 2px;
+  scrollbar-width: none; scroll-behavior: smooth;
+}
+.history-list::-webkit-scrollbar { display: none; }
+.history-item {
+  flex: 0 0 auto; padding: 10px 14px;
+  background: linear-gradient(145deg, rgba(45,45,85,0.5), rgba(35,35,70,0.4));
+  border-radius: 12px; text-align: center; min-width: 68px;
+  border: 1px solid rgba(100,150,255,0.15);
+  transition: transform 0.15s ease, border-color 0.2s;
+}
+.history-item:active { transform: scale(0.98); }
+.history-item.best {
+  border: 2px solid var(--accent-orange);
+  background: linear-gradient(145deg, rgba(245,158,11,0.15), rgba(245,158,11,0.08));
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+.history-score { font-size: 19px; font-weight: 800; color: var(--accent-blue); }
+.history-time { font-size: 9px; opacity: 0.5; margin-top: 3px; }
+.history-best-badge {
+  display: block; font-size: 8px; color: var(--accent-orange);
+  margin-top: 2px; font-weight: 600;
+}
+
+/* Instructions */
+.instructions {
+  margin-top: 14px; padding: 12px 15px;
+  background: linear-gradient(145deg, rgba(40,50,80,0.35), rgba(30,40,70,0.25));
+  border-radius: 14px; font-size: 12px; line-height: 1.5; text-align: left;
+  border: 1px solid rgba(100,150,255,0.15);
+  animation: fadeInUp 0.4s ease 0.2s both;
+}
+.instructions strong { color: var(--accent-blue); }
+.instructions ol { margin: 8px 0 0 20px; padding: 0; }
+.instructions li { margin: 4px 0; opacity: 0.9; }
+.instructions li::marker { color: var(--accent-green); }
+
+/* Modal */
+.modal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(5, 5, 20, 0.92); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 20px; animation: modalFade 0.25s ease;
+}
+@keyframes modalFade { from { opacity: 0 } to { opacity: 1 } }
+.modal.hidden { display: none; }
+
+.modal-content {
+  background: linear-gradient(145deg, #1e1e45, #2a2a5a);
+  padding: 24px; border-radius: 20px; max-width: 340px;
+  text-align: center; border: 1px solid rgba(100,150,255,0.35);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(100, 150, 255, 0.2);
+  animation: modalSlide 0.3s ease;
+}
+@keyframes modalSlide { from { transform: translateY(20px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+
+.modal h3 { margin: 0 0 14px 0; font-size: 20px; font-weight: 700; }
+.modal p { opacity: 0.85; font-size: 14px; margin: 0 0 18px 0; line-height: 1.5; }
+.modal p small { display: block; margin-top: 8px; opacity: 0.6; font-size: 12px; }
+.modal-buttons { display: flex; gap: 10px; justify-content: center; }
+
+/* Calibration */
+.calibration-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(26,26,58,0.98) 0%, rgba(10,10,30,0.99) 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 600; padding: 25px; animation: fadeIn 0.2s ease;
+}
+.calibration-overlay.hidden { display: none; }
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+.calibration-icon {
+  font-size: 48px; margin-bottom: 16px; animation: bounce 1s infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.calibration-progress {
+  width: 180px; height: 180px;
+  border: 4px solid rgba(100,150,255,0.25); border-top-color: var(--accent-blue);
+  border-radius: 50%; animation: spin 0.9s linear infinite; margin: 16px 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-height: 700px) {
+  .score-container { margin: 6px 0 10px; padding: 14px 16px; }
+  #score { font-size: 58px; }
+  .punch-visual { width: 110px; height: 110px; margin: 6px auto 10px; }
+  .punch-center { width: 38px; height: 38px; }
+  .stats-grid { gap: 6px; }
+  .stat-value { font-size: 14px; }
+}
+@media (max-width: 360px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .btn-group { gap: 7px; }
+  button { min-width: 85px; padding: 11px 16px; font-size: 13px; }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 </style>
 </head>
@@ -204,83 +383,71 @@ button:active { transform: scale(0.97); }
 
 <div class="container">
   <header>
-    <h1>🥊 Punch Machine S22</h1>
-    <p class="subtitle">Telefonu sıkı tut • Geri çek • Sert vur!</p>
+    <h1>🥊 Punch Machine Ultra</h1>
+    <p class="subtitle">Sadece vur. Gerisini sensörler halleder.</p>
   </header>
 
   <div class="https-warning" id="httpsWarning">
-    ⚠️ Sensörler için sayfayı <strong>https://</strong> üzerinden açmalısınız veya localhost kullanmalısınız.
+    ⚠️ Sensörler için <strong>HTTPS</strong> gereklidir. Localhost veya yayınlanmış site kullanın.
   </div>
 
   <div class="score-container">
     <div id="score">0000</div>
-    <div class="score-label">En Yüksek Skor</div>
+    <div class="score-label">Maksimum Skor</div>
+    <div class="score-badge" id="calibrationBadge">⚙️ Kalibrasyon Bekleniyor</div>
   </div>
 
   <div id="status">
     <span class="status-dot" id="statusDot"></span>
-    <span id="statusText">Sensörler bekliyor</span>
+    <span id="statusText">📱 Başlat'a basarak başla</span>
   </div>
 
   <div class="punch-visual">
     <div class="punch-ring"></div><div class="punch-ring"></div><div class="punch-ring"></div>
     <div class="punch-center" id="punchCenter"></div>
+    <div class="punch-particles" id="punchParticles"></div>
   </div>
 
-  <!-- DEBUG PANEL -->
-  <div class="debug-panel">
-    <div class="debug-title">
-      <span>🔍 Sensör Verileri (S22)</span>
-      <button class="debug-toggle" id="toggleDebug">Gizle</button>
+  <!-- Stats: All Axes -->
+  <div class="stats-grid">
+    <div class="stat-card" id="statX">
+      <span class="stat-value" id="valX">0.0</span>
+      <span class="stat-label">X Eksen<span class="stat-unit">m/s²</span></span>
     </div>
-    <div class="debug-grid" id="debugGrid">
-      <div class="debug-item">
-        <span class="debug-label">Z Ekseni (m/s²)</span>
-        <span class="debug-value" id="debugZ">0.0</span>
-      </div>
-      <div class="debug-item">
-        <span class="debug-label">Jerk (ani değişim)</span>
-        <span class="debug-value" id="debugJerk">0</span>
-      </div>
-      <div class="debug-item">
-        <span class="debug-label">Durum</span>
-        <span class="debug-value" id="debugState">idle</span>
-      </div>
-      <div class="debug-item">
-        <span class="debug-label">Peak</span>
-        <span class="debug-value" id="debugPeak">0.0</span>
-      </div>
-      <div class="debug-item">
-        <span class="debug-label">Impulse</span>
-        <span class="debug-value" id="debugImpulse">0.0</span>
-      </div>
-      <div class="debug-item">
-        <span class="debug-label">Eksen</span>
-        <span class="debug-value" id="debugAxis">-</span>
-      </div>
+    <div class="stat-card" id="statY">
+      <span class="stat-value" id="valY">0.0</span>
+      <span class="stat-label">Y Eksen<span class="stat-unit">m/s²</span></span>
+    </div>
+    <div class="stat-card" id="statZ">
+      <span class="stat-value" id="valZ">0.0</span>
+      <span class="stat-label">Z Eksen<span class="stat-unit">m/s²</span></span>
+    </div>
+    <div class="stat-card active" id="statMag">
+      <span class="stat-value" id="valMag">0.0</span>
+      <span class="stat-label">Vektör<span class="stat-unit">m/s²</span></span>
     </div>
   </div>
 
   <div class="btn-group">
-    <button class="primary" id="startBtn">▶️ Başlat</button>
-    <button class="secondary" id="calibrateBtn">⚙️ Kalibre</button>
-    <button class="secondary" id="testBtn">🧪 Test Vuruş</button>
-    <button class="secondary" id="resetBtn">🔄 Reset</button>
+    <button class="primary" id="startBtn">🚀 Başlat</button>
+    <button class="secondary" id="calibrateBtn">🔄 Kalibre Et</button>
+    <button class="secondary" id="testBtn">🧪 Test</button>
+    <button class="danger" id="resetBtn">♻️ Reset</button>
   </div>
 
   <div class="history">
-    <h3>🏆 Son Vuruşlar</h3>
+    <h3>🏆 Son Vuruşlar <span id="bestBadge"></span></h3>
     <div class="history-list" id="historyList"></div>
   </div>
 
   <div class="instructions">
-    <strong>Nasıl Yapılır:</strong>
+    <strong>Nasıl Kullanılır:</strong>
     <ol>
-      <li>▶️ "Başlat"a bas ve "İzin Ver" de</li>
-      <li>Telefonu iki elinle sıkıca tut (ekran sana baksın)</li>
-      <li>Önce hafifçe <strong>geri çek</strong> (cocking)</li>
-      <li>Aniden <strong>öne doğru sertçe vur</strong>!</li>
-      <li>Debug panelinden sensör değerlerini izle</li>
+      <li>🚀 "Başlat" → İzin ver (HTTPS şart)</li>
+      <li>🔄 "Kalibre Et" → Telefonu 2.5sn sabit tut</li>
+      <li>📱 Telefonu rahatça tut (hangi yönde olursa olsun)</li>
+      <li>👊 Aniden ve sertçe yumruk at - gerisi otomatik!</li>
+      <li>✨ Skor vektör büyüklüğüne göre hesaplanır</li>
     </ol>
   </div>
 </div>
@@ -288,106 +455,120 @@ button:active { transform: scale(0.97); }
 <!-- Permission Modal -->
 <div class="modal" id="permissionModal">
   <div class="modal-content">
-    <h3>🔐 Sensör İzni Gerekli</h3>
-    <p>Punch Machine'in çalışması için ivmeölçer erişimi gerekiyor. Lütfen "İzin Ver"e basın.</p>
-    <p style="font-size:12px;opacity:0.7">Not: Chrome Android'de sensörler sadece HTTPS'de çalışır.</p>
+    <h3>🔐 Sensör Erişimi</h3>
+    <p>Punch Machine Ultra'nın çalışması için ivmeölçer verilerine ihtiyaç var.</p>
+    <p><small>📌 Chrome Android: Sadece HTTPS veya localhost'ta çalışır</small></p>
     <div class="modal-buttons">
-      <button class="primary" id="grantPermission">✅ İzin Ver</button>
-      <button class="secondary" id="denyPermission">❌ İptal</button>
+      <button class="primary" id="grantPermission">✅ İzin Ver & Başla</button>
+      <button class="secondary" id="denyPermission">❌ Sonra</button>
     </div>
   </div>
 </div>
 
 <!-- Calibration Overlay -->
 <div class="calibration-overlay hidden" id="calibrationOverlay">
-  <h3>🔄 Kalibrasyon</h3>
-  <p>Telefonu düz yüzeyde hareketsiz tutun...</p>
+  <div class="calibration-icon">🔄</div>
+  <h3 style="margin:0 0 8px 0">Kalibrasyon</h3>
+  <p style="opacity:0.8;margin:0 0 16px 0">Telefonu düz bir yüzeyde hareketsiz tutun...</p>
   <div class="calibration-progress"></div>
-  <p id="calibrationProgress">3 saniye kaldı</p>
-  <button class="secondary" id="cancelCalibration">İptal</button>
+  <p id="calibrationProgress" style="font-size:14px;font-weight:500">3 saniye kaldı</p>
+  <button class="secondary" id="cancelCalibration" style="margin-top:12px">İptal</button>
 </div>
 
 <script>
-// ====== S22 OPTIMIZED CONFIG ======
+// ====== ULTRA CONFIG - Adaptive & Multi-Axis ======
 const CONFIG = {
-  // S22 için DÜŞÜK eşikler (sensör değerlerini debug panelinden kontrol edin)
-  COCKING_THRESHOLD: -3.5,    // Geri çekme: daha hassas
-  PUNCH_THRESHOLD: 6,          // Vuruş başlangıcı: daha düşük
-  MIN_PEAK: 8,                 // Minimum peak: S22 için optimize
-  MIN_JERK: 15,                // Minimum jerk
-  MIN_IMPULSE: 0.4,            // Minimum impulse
+  // Detection - AUTO-ADAPTIVE (set during calibration)
+  BASE_THRESHOLD_MULTIPLIER: 2.8,    // threshold = noiseStd * multiplier
+  MIN_ABSOLUTE_THRESHOLD: 5,          // absolute minimum threshold
+  MAX_ABSOLUTE_THRESHOLD: 25,         // absolute maximum threshold
   
-  // Scoring - S22 sensör aralıklarına göre ayarlandı
-  SCORE_PEAK_WEIGHT: 0.4,
-  SCORE_JERK_WEIGHT: 0.35,
-  SCORE_IMPULSE_WEIGHT: 0.25,
+  // Validation minimums (post-calibration safety)
+  MIN_PEAK_ABSOLUTE: 7,
+  MIN_JERK_ABSOLUTE: 12,
+  MIN_IMPULSE_ABSOLUTE: 0.3,
+  
+  // Scoring - Vector magnitude based
+  SCORE_VECTOR_WEIGHT: 0.55,
+  SCORE_JERK_WEIGHT: 0.30,
+  SCORE_IMPULSE_WEIGHT: 0.15,
   SCORE_SCALE: 9999,
-  SCORE_EXPONENT: 1.8,
-  SCORE_DECAY: 28,             // Daha düşük = daha hızlı skor artışı
+  SCORE_EXPONENT: 1.9,
+  SCORE_DECAY: 22,                    // Lower = faster score growth
   
-  // Timing - Android rate limit'e uygun
-  CALIBRATION_DURATION: 2500,  // 2.5 saniye
-  PUNCH_WINDOW: 200,           // ms - daha kısa pencere
-  COCKING_TIMEOUT: 600,        // geri çekme-punch arası max süre
+  // Timing - Optimized for instant response
+  CALIBRATION_DURATION: 2500,         // 2.5 seconds
+  PUNCH_WINDOW: 180,                  // ms capture window (shorter = more responsive)
+  COOLDOWN: 400,                      // ms between punches
   
   // Filtering
-  SMOOTHING_FACTOR: 0.25,      // Daha az smoothing = daha hızlı tepki
-  MIN_SAMPLES: 5,              // Daha az örnek yeterli
+  SMOOTHING_FACTOR: 0.22,             // Low-pass filter alpha
+  MIN_SAMPLES: 4,                     // Minimum samples in punch window
   
-  // Debug
-  DEBUG_UPDATE_MS: 50,         // Debug panel güncelleme hızı
+  // Haptics - STRONGER feedback
+  VIBRATE_BASE: [20, 12, 45, 12, 80], // Base pattern
+  VIBRATE_INTENSITY_SCALE: 0.25,      // score * scale = extra vibration ms
   
-  VIBRATE_PATTERN: [12,8,25,8,40],
-  MAX_HISTORY: 10
+  // UI
+  DEBUG_UPDATE_MS: 45,                // Stats panel update rate
+  MAX_HISTORY: 12,
+  
+  // Calibration analysis
+  CALIBRATION_MIN_SAMPLES: 40,        // Minimum samples for valid calibration
+  NOISE_FLOOR_MS2: 0.3                // Minimum noise floor to avoid over-sensitive
 };
 
 // ====== STATE ======
 const state = {
-  axis: 'z',  // S22'de genelde Z ekseni en iyi çalışır
-  baseline: {x:0,y:0,z:0},
+  // Calibration results (adaptive)
+  baseline: { x: 0, y: 0, z: 0 },
+  noiseStd: { x: 1, y: 1, z: 1 },     // Standard deviation of noise per axis
+  thresholds: { x: 8, y: 8, z: 8 },    // Adaptive thresholds per axis
+  calibrated: false,
   
-  mode: 'idle',
+  // Runtime
+  mode: 'idle', // idle, recording, processing, cooldown
   windowData: [],
   windowStart: 0,
-  cockingTime: 0,
+  lastPunchTime: 0,
   
   lastTime: 0,
-  lastAccel: 0,
-  smoothedAccel: 0,
+  lastAccelMag: 0,
+  smoothedMag: 0,
   
-  metrics: {peak:0,jerk:0,impulse:0},
+  metrics: { peak: 0, jerk: 0, impulse: 0, vector: 0 },
+  
   history: [],
   bestScore: 0,
   
   sensorsReady: false,
   permissionGranted: false,
-  debugVisible: true,
   
-  // Debug throttling
-  lastDebugUpdate: 0
+  // Stats throttling
+  lastStatsUpdate: 0
 };
 
-// ====== DOM ======
+// ====== DOM ELEMENTS ======
 const els = {
   score: document.getElementById('score'),
   statusText: document.getElementById('statusText'),
   statusDot: document.getElementById('statusDot'),
+  status: document.getElementById('status'),
   punchCenter: document.getElementById('punchCenter'),
+  punchParticles: document.getElementById('punchParticles'),
+  calibrationBadge: document.getElementById('calibrationBadge'),
+  bestBadge: document.getElementById('bestBadge'),
   
-  // Debug elements
-  debugZ: document.getElementById('debugZ'),
-  debugJerk: document.getElementById('debugJerk'),
-  debugState: document.getElementById('debugState'),
-  debugPeak: document.getElementById('debugPeak'),
-  debugImpulse: document.getElementById('debugImpulse'),
-  debugAxis: document.getElementById('debugAxis'),
-  debugGrid: document.getElementById('debugGrid'),
+  // Stats per axis
+  valX: document.getElementById('valX'), valY: document.getElementById('valY'),
+  valZ: document.getElementById('valZ'), valMag: document.getElementById('valMag'),
+  statX: document.getElementById('statX'), statY: document.getElementById('statY'),
+  statZ: document.getElementById('statZ'), statMag: document.getElementById('statMag'),
   
   startBtn: document.getElementById('startBtn'),
   calibrateBtn: document.getElementById('calibrateBtn'),
   testBtn: document.getElementById('testBtn'),
   resetBtn: document.getElementById('resetBtn'),
-  toggleDebug: document.getElementById('toggleDebug'),
   historyList: document.getElementById('historyList'),
   
   permissionModal: document.getElementById('permissionModal'),
@@ -396,108 +577,148 @@ const els = {
   httpsWarning: document.getElementById('httpsWarning')
 };
 
-// ====== UTILS ======
+// ====== UTILITIES ======
 const now = () => Date.now();
-const clamp = (v,min,max) => Math.max(min, Math.min(max, v));
-const lerp = (a,b,t) => a + (b-a)*t;
-const fmt = v => Math.floor(clamp(v,0,CONFIG.SCORE_SCALE)).toString().padStart(4,'0');
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const fmt = v => Math.floor(clamp(v, 0, CONFIG.SCORE_SCALE)).toString().padStart(4, '0');
 
-function updateStatus(text, cls) {
+// Vector magnitude: √(x² + y² + z²)
+const vectorMag = (x, y, z) => Math.sqrt(x*x + y*y + z*z);
+
+function updateStatus(text, isPunching = false) {
   els.statusText.textContent = text;
-  els.statusDot.className = 'status-dot' + (cls ? ` ${cls}` : '');
+  els.statusDot.className = 'status-dot ' + (isPunching ? 'punching' : 'ready');
+  els.status.classList.toggle('punch-active', isPunching);
 }
 
-// ====== DEBUG UPDATE ======
-function updateDebug(accel, jerk, mode, peak, impulse) {
-  if (!state.debugVisible) return;
+function updateCalibrationBadge() {
+  if (!state.calibrated) {
+    els.calibrationBadge.textContent = '⚙️ Kalibrasyon Yapın';
+    els.calibrationBadge.style.background = 'rgba(245,158,11,0.15)';
+    els.calibrationBadge.style.borderColor = 'rgba(245,158,11,0.4)';
+    els.calibrationBadge.style.color = '#fbbf24';
+  } else {
+    els.calibrationBadge.textContent = `✅ Kalibre: ±${Math.round(state.thresholds.z)} m/s²`;
+    els.calibrationBadge.style.background = 'rgba(34,197,94,0.15)';
+    els.calibrationBadge.style.borderColor = 'rgba(34,197,94,0.4)';
+    els.calibrationBadge.style.color = '#22c55e';
+  }
+}
+
+// ====== STATS DISPLAY ======
+function updateStats(x, y, z, mag, jerk, mode) {
   const t = now();
-  if (t - state.lastDebugUpdate < CONFIG.DEBUG_UPDATE_MS) return;
-  state.lastDebugUpdate = t;
+  if (t - state.lastStatsUpdate < CONFIG.DEBUG_UPDATE_MS) return;
+  state.lastStatsUpdate = t;
   
-  els.debugZ.textContent = accel.toFixed(1);
-  els.debugJerk.textContent = Math.floor(jerk);
-  els.debugState.textContent = mode;
-  els.debugPeak.textContent = peak.toFixed(1);
-  els.debugImpulse.textContent = impulse.toFixed(2);
-  els.debugAxis.textContent = state.axis?.toUpperCase() || '-';
+  // Update values
+  els.valX.textContent = x.toFixed(1);
+  els.valY.textContent = y.toFixed(1);
+  els.valZ.textContent = z.toFixed(1);
+  els.valMag.textContent = mag.toFixed(1);
   
-  // Renkli highlight for active values
-  els.debugZ.classList.toggle('active', Math.abs(accel) > 5);
-  els.debugJerk.classList.toggle('active', jerk > 20);
+  // Highlight active axis (highest absolute value)
+  const abs = [Math.abs(x), Math.abs(y), Math.abs(z), mag];
+  const maxIdx = abs.indexOf(Math.max(...abs));
+  [els.statX, els.statY, els.statZ, els.statMag].forEach((el, i) => {
+    el.classList.toggle('active', i === maxIdx && mag > 3);
+  });
 }
 
-// ====== SENSOR HANDLING ======
+// ====== PARTICLE EFFECT ======
+function createParticles() {
+  els.punchParticles.innerHTML = '';
+  els.punchParticles.classList.add('active');
+  
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const angle = (i / 16) * Math.PI * 2;
+    const dist = 60 + Math.random() * 40;
+    p.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+    p.style.setProperty('--ty', `${Math.sin(angle) * dist}px`);
+    p.style.animationDelay = `${Math.random() * 0.1}s`;
+    els.punchParticles.appendChild(p);
+  }
+  
+  setTimeout(() => els.punchParticles.classList.remove('active'), 650);
+}
+
+// ====== SENSOR HANDLING - MULTI-AXIS ======
 function handleMotion(e) {
-  if (!state.sensorsReady || state.mode === 'processing') return;
+  if (!state.sensorsReady || state.mode === 'processing' || state.mode === 'cooldown') return;
   
   const t = now();
-  const dt = Math.max(0.005, (t - state.lastTime)/1000);
+  const dt = Math.max(0.004, (t - state.lastTime) / 1000); // Min 4ms
   state.lastTime = t;
   
   const acc = e.accelerationIncludingGravity;
-  if (!acc) return;
+  if (!acc || acc.x === null) return;
   
-  // S22: Z ekseni genellikle en tutarlı (telefon dikey tutulduğunda)
+  // Remove baseline (calibrated gravity offset)
   const raw = {
     x: acc.x - state.baseline.x,
     y: acc.y - state.baseline.y,
     z: acc.z - state.baseline.z
   };
   
-  const axis = state.axis || 'z';
-  let value = raw[axis] || 0;
+  // Vector magnitude - works in ANY phone orientation!
+  const mag = vectorMag(raw.x, raw.y, raw.z);
   
-  // Smoothing - S22 için optimize
-  state.smoothedAccel = lerp(state.smoothedAccel, value, CONFIG.SMOOTHING_FACTOR);
-  const accel = state.smoothedAccel;
+  // Smoothing for noise reduction
+  state.smoothedMag = lerp(state.smoothedMag, mag, CONFIG.SMOOTHING_FACTOR);
+  const accelMag = state.smoothedMag;
   
-  // Jerk calculation
-  const jerk = Math.abs((accel - state.lastAccel) / dt);
-  state.lastAccel = accel;
+  // Jerk: rate of change of acceleration magnitude
+  const jerk = Math.abs((accelMag - state.lastAccelMag) / dt);
+  state.lastAccelMag = accelMag;
   
-  // ===== DEBUG PANEL =====
-  updateDebug(accel, jerk, state.mode, state.metrics.peak, state.metrics.impulse);
+  // Update stats display
+  updateStats(raw.x, raw.y, raw.z, accelMag, jerk, state.mode);
   
-  // ===== STATE MACHINE =====
+  // ===== DIRECT PUNCH DETECTION (no cocking needed) =====
   
-  // IDLE → ARMED (geri çekme)
-  if (state.mode === 'idle' && accel < CONFIG.COCKING_THRESHOLD) {
-    state.mode = 'armed';
-    state.cockingTime = t;
-    updateStatus('🎯 Geri çektin! Şimdi vur!', 'armed');
-  }
+  // Check if any axis exceeds adaptive threshold OR vector magnitude is high
+  const exceededX = Math.abs(raw.x) > state.thresholds.x;
+  const exceededY = Math.abs(raw.y) > state.thresholds.y;
+  const exceededZ = Math.abs(raw.z) > state.thresholds.z;
+  const exceededMag = accelMag > Math.min(state.thresholds.x, state.thresholds.y, state.thresholds.z) * 0.9;
   
-  // ARMED timeout
-  if (state.mode === 'armed' && t - state.cockingTime > CONFIG.COCKING_TIMEOUT) {
-    state.mode = 'idle';
-    updateStatus('⏰ Tekrar dene', 'ready');
-  }
-  
-  // ARMED → RECORDING (vuruş)
-  if (state.mode === 'armed' && accel > CONFIG.PUNCH_THRESHOLD) {
+  // IDLE → RECORDING: Sudden high acceleration on ANY axis
+  if (state.mode === 'idle' && (exceededX || exceededY || exceededZ || exceededMag) && jerk > CONFIG.MIN_JERK_ABSOLUTE) {
     state.mode = 'recording';
     state.windowData = [];
     state.windowStart = t;
-    state.metrics = {peak:0,jerk:0,impulse:0};
+    state.metrics = { peak: 0, jerk: 0, impulse: 0, vector: 0 };
+    
+    // Visual feedback
     els.punchCenter.classList.add('active');
-    updateStatus('💥 VURDUN!', 'punching');
+    createParticles();
+    updateStatus('💥 Algılandı!', true);
+    
+    // Strong haptic pre-feedback
+    if (navigator.vibrate) navigator.vibrate([15, 8, 25]);
   }
   
-  // RECORDING
+  // RECORDING: Collect punch window data
   if (state.mode === 'recording') {
-    state.windowData.push({t, v:accel, j:jerk});
+    state.windowData.push({ t, x: raw.x, y: raw.y, z: raw.z, mag: accelMag, jerk });
     
-    state.metrics.peak = Math.max(state.metrics.peak, Math.abs(accel));
+    // Track real-time metrics
+    state.metrics.vector = Math.max(state.metrics.vector, mag);
+    state.metrics.peak = Math.max(state.metrics.peak, accelMag);
     state.metrics.jerk = Math.max(state.metrics.jerk, jerk);
-    if (accel > 0) state.metrics.impulse += accel * dt;
+    if (accelMag > 2) state.metrics.impulse += accelMag * dt;
     
+    // End window after duration
     if (t - state.windowStart >= CONFIG.PUNCH_WINDOW) {
       processPunch();
     }
   }
 }
 
-// ====== PROCESS PUNCH ======
+// ====== PUNCH PROCESSING ======
 function processPunch() {
   state.mode = 'processing';
   els.punchCenter.classList.remove('active');
@@ -505,75 +726,107 @@ function processPunch() {
   const data = state.windowData;
   const m = state.metrics;
   
+  // Validate sample count
   if (data.length < CONFIG.MIN_SAMPLES) {
-    resetPunch('❌ Yetersiz veri');
+    resetPunch('⚡ Çok hızlı! Tekrar dene');
     return;
   }
   
-  // S22 için daha düşük eşikler
-  if (m.peak < CONFIG.MIN_PEAK) {
-    resetPunch('💪 Daha sert!');
+  // Adaptive validation using calibration data
+  const effectivePeakMin = Math.max(CONFIG.MIN_PEAK_ABSOLUTE, state.thresholds.z * 0.7);
+  const effectiveJerkMin = Math.max(CONFIG.MIN_JERK_ABSOLUTE, state.thresholds.z * 1.2);
+  
+  if (m.peak < effectivePeakMin) {
+    resetPunch('💪 Daha sert vurmalısın!');
     return;
   }
-  if (m.jerk < CONFIG.MIN_JERK) {
-    resetPunch('⚡ Daha ani hareket!');
+  if (m.jerk < effectiveJerkMin) {
+    resetPunch('⚡ Daha ani hareket et!');
     return;
   }
-  if (m.impulse < CONFIG.MIN_IMPULSE) {
-    resetPunch('🎯 Takip hareketi ekle!');
+  if (m.impulse < CONFIG.MIN_IMPULSE_ABSOLUTE) {
+    resetPunch('🎯 Vuruşu tamamla!');
     return;
   }
   
-  // ===== SCORING (S22 optimize) =====
+  // ===== VECTOR-BASED SCORING =====
+  // Primary: vector magnitude (works in any orientation)
+  // Secondary: jerk (snap/quick movement)
+  // Tertiary: impulse (follow-through)
+  
   const weighted = 
-    m.peak * CONFIG.SCORE_PEAK_WEIGHT +
-    m.jerk * CONFIG.SCORE_JERK_WEIGHT * 0.08 +
-    m.impulse * CONFIG.SCORE_IMPULSE_WEIGHT * 8;
+    m.vector * CONFIG.SCORE_VECTOR_WEIGHT +
+    m.jerk * CONFIG.SCORE_JERK_WEIGHT * 0.09 +
+    m.impulse * CONFIG.SCORE_IMPULSE_WEIGHT * 9;
   
+  // Non-linear scoring curve for better distribution 0-9999
   const rawScore = CONFIG.SCORE_SCALE * 
     Math.pow(1 - Math.exp(-weighted / CONFIG.SCORE_DECAY), CONFIG.SCORE_EXPONENT);
   
   let finalScore = Math.floor(clamp(rawScore, 0, CONFIG.SCORE_SCALE));
   
-  // Bonus
-  if (m.peak > 20) finalScore = Math.min(9999, finalScore + 150);
-  if (m.jerk > 50) finalScore = Math.min(9999, finalScore + 100);
+  // Bonuses for exceptional punches
+  if (m.vector > 25) finalScore = Math.min(9999, finalScore + 250);
+  if (m.jerk > 60) finalScore = Math.min(9999, finalScore + 180);
+  if (m.impulse > 2.5) finalScore = Math.min(9999, finalScore + 120);
   
-  // Update UI
+  // Update display with animation
   els.score.textContent = fmt(finalScore);
   els.score.classList.add('punch');
-  setTimeout(() => els.score.classList.remove('punch'), 250);
+  setTimeout(() => els.score.classList.remove('punch'), 280);
   
-  // Haptic
+  // ===== STRONG HAPTIC FEEDBACK =====
   if (navigator.vibrate) {
-    navigator.vibrate([12,8,clamp(finalScore/180,15,180),8,25]);
+    const base = CONFIG.VIBRATE_BASE;
+    const intensity = clamp(finalScore * CONFIG.VIBRATE_INTENSITY_SCALE, 20, 200);
+    // Create dynamic pattern: stronger score = longer/faster pulses
+    const pattern = [
+      base[0], base[1], 
+      Math.min(60, base[2] + intensity * 0.3),
+      base[3],
+      Math.min(120, base[4] + intensity * 0.5)
+    ];
+    navigator.vibrate(pattern);
   }
   
-  // History
+  // Update history and best score
   addToHistory(finalScore);
-  updateStatus(`🔥 ${finalScore} puan!`, 'ready');
   
-  setTimeout(resetPunchState, 1200);
+  // Status with score
+  updateStatus(`🔥 ${finalScore} - Harika vuruş!`);
+  
+  // Cooldown before next punch
+  state.mode = 'cooldown';
+  setTimeout(() => {
+    state.mode = 'idle';
+    resetPunchState();
+    updateStatus('✅ Hazır - Vurmaya devam et!');
+  }, CONFIG.COOLDOWN);
 }
 
 function resetPunch(msg) {
-  updateStatus(msg || 'Hazır', 'ready');
+  els.punchCenter.classList.remove('active');
+  updateStatus(msg || '✅ Hazır');
   resetPunchState();
 }
 
 function resetPunchState() {
   state.mode = 'idle';
   state.windowData = [];
-  state.metrics = {peak:0,jerk:0,impulse:0};
+  state.metrics = { peak: 0, jerk: 0, impulse: 0, vector: 0 };
+  state.lastAccelMag = 0;
+  state.smoothedMag = 0;
 }
 
 // ====== HISTORY ======
 function addToHistory(score) {
-  state.history.unshift({score, time:new Date()});
+  state.history.unshift({ score, time: new Date() });
   if (state.history.length > CONFIG.MAX_HISTORY) state.history.pop();
+  
   if (score > state.bestScore) {
     state.bestScore = score;
-    localStorage.setItem('punchBest_S22', score);
+    localStorage.setItem('punchUltra_best', score);
+    els.bestBadge.textContent = `• En İyi: ${fmt(score)}`;
   }
   renderHistory();
 }
@@ -582,67 +835,127 @@ function renderHistory() {
   els.historyList.innerHTML = '';
   state.history.forEach(item => {
     const div = document.createElement('div');
-    div.className = 'history-item' + (item.score === state.bestScore ? ' best' : '');
-    div.innerHTML = `<div class="history-score">${fmt(item.score)}</div><div class="history-time">${item.time.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>`;
+    const isBest = item.score === state.bestScore && state.history.length > 1;
+    div.className = 'history-item' + (isBest ? ' best' : '');
+    div.innerHTML = `
+      <div class="history-score">${fmt(item.score)}</div>
+      <div class="history-time">${item.time.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>
+      ${isBest ? '<span class="history-best-badge">⭐ EN İYİ</span>' : ''}
+    `;
     els.historyList.appendChild(div);
   });
 }
 
-// ====== CALIBRATION ======
+// ====== ADAPTIVE CALIBRATION ======
 function calibrate() {
-  if (!state.sensorsReady) { updateStatus('⚠️ Önce başlat', ''); return; }
+  if (!state.sensorsReady) {
+    updateStatus('⚠️ Önce sensörleri başlat');
+    return;
+  }
   
   els.calibrationOverlay.classList.remove('hidden');
-  updateStatus('🔄 Kalibrasyon...', '');
+  updateStatus('🔄 Kalibrasyon...', false);
   
-  const samples = [], start = now();
+  const samples = { x: [], y: [], z: [] };
+  const start = now();
   
   function collect(e) {
     const acc = e.accelerationIncludingGravity;
-    if (acc) samples.push({x:acc.x,y:acc.y,z:acc.z});
+    if (!acc) return;
+    
+    samples.x.push(acc.x);
+    samples.y.push(acc.y);
+    samples.z.push(acc.z);
     
     const elapsed = now() - start;
-    const rem = Math.ceil((CONFIG.CALIBRATION_DURATION - elapsed)/1000);
-    els.calibrationProgress.textContent = rem > 0 ? `${rem}s kaldı` : 'Tamamlanıyor...';
+    const remaining = Math.max(0, Math.ceil((CONFIG.CALIBRATION_DURATION - elapsed) / 1000));
+    els.calibrationProgress.textContent = remaining > 0 ? `${remaining} saniye kaldı` : 'Analiz ediliyor...';
     
     if (elapsed >= CONFIG.CALIBRATION_DURATION) {
       window.removeEventListener('devicemotion', collect);
-      finalizeCalibration(samples);
+      analyzeCalibration(samples);
     }
   }
-  window.addEventListener('devicemotion', collect);
+  
+  window.addEventListener('devicemotion', collect, { passive: true });
 }
 
-function finalizeCalibration(samples) {
+function analyzeCalibration(samples) {
   els.calibrationOverlay.classList.add('hidden');
-  if (samples.length < 20) { updateStatus('❌ Başarısız', ''); return; }
   
-  const avg = {x:0,y:0,z:0};
-  samples.forEach(s => { avg.x+=s.x; avg.y+=s.y; avg.z+=s.z; });
-  avg.x/=samples.length; avg.y/=samples.length; avg.z/=samples.length;
-  state.baseline = avg;
+  // Validate sample count
+  if (samples.x.length < CONFIG.CALIBRATION_MIN_SAMPLES) {
+    updateStatus('❌ Yetersiz veri - Tekrar dene');
+    return;
+  }
   
-  // S22: Z eksenini varsayılan yap (daha tutarlı)
-  state.axis = 'z';
+  // Calculate mean (baseline) per axis
+  const mean = {
+    x: samples.x.reduce((a,b)=>a+b,0) / samples.x.length,
+    y: samples.y.reduce((a,b)=>a+b,0) / samples.y.length,
+    z: samples.z.reduce((a,b)=>a+b,0) / samples.z.length
+  };
+  state.baseline = mean;
   
-  localStorage.setItem('punchCal_S22', JSON.stringify({baseline:state.baseline,axis:state.axis}));
-  updateStatus(`✅ Kalibre (Z ekseni)`, 'ready');
+  // Calculate standard deviation (noise level) per axis
+  const std = {
+    x: Math.sqrt(samples.x.reduce((sum,v)=>sum+Math.pow(v-mean.x,2),0)/samples.x.length),
+    y: Math.sqrt(samples.y.reduce((sum,v)=>sum+Math.pow(v-mean.y,2),0)/samples.y.length),
+    z: Math.sqrt(samples.z.reduce((sum,v)=>sum+Math.pow(v-mean.z,2),0)/samples.z.length)
+  };
+  
+  // Ensure minimum noise floor to avoid over-sensitive detection
+  state.noiseStd = {
+    x: Math.max(std.x, CONFIG.NOISE_FLOOR_MS2),
+    y: Math.max(std.y, CONFIG.NOISE_FLOOR_MS2),
+    z: Math.max(std.z, CONFIG.NOISE_FLOOR_MS2)
+  };
+  
+  // Calculate adaptive thresholds: noise * multiplier, clamped to safe range
+  state.thresholds = {
+    x: clamp(state.noiseStd.x * CONFIG.BASE_THRESHOLD_MULTIPLIER, CONFIG.MIN_ABSOLUTE_THRESHOLD, CONFIG.MAX_ABSOLUTE_THRESHOLD),
+    y: clamp(state.noiseStd.y * CONFIG.BASE_THRESHOLD_MULTIPLIER, CONFIG.MIN_ABSOLUTE_THRESHOLD, CONFIG.MAX_ABSOLUTE_THRESHOLD),
+    z: clamp(state.noiseStd.z * CONFIG.BASE_THRESHOLD_MULTIPLIER, CONFIG.MIN_ABSOLUTE_THRESHOLD, CONFIG.MAX_ABSOLUTE_THRESHOLD)
+  };
+  
+  state.calibrated = true;
+  
+  // Save to localStorage
+  localStorage.setItem('punchUltra_cal', JSON.stringify({
+    baseline: state.baseline,
+    noiseStd: state.noiseStd,
+    thresholds: state.thresholds
+  }));
+  
+  // Update UI
+  updateCalibrationBadge();
+  updateStatus(`✅ Kalibre: ${Object.values(state.thresholds).map(t=>Math.round(t)).join('/')} m/s²`);
+  
+  // Auto-enable punch detection
+  if (state.mode === 'idle') {
+    updateStatus('🎯 Hazır - İstediğin zaman vur!');
+  }
 }
 
 // ====== PERMISSION & START ======
 async function requestPermission() {
-  // HTTPS check
+  // HTTPS warning
   if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
     els.httpsWarning.classList.add('show');
   }
   
+  // iOS permission request
   if (typeof DeviceMotionEvent !== 'undefined' && DeviceMotionEvent.requestPermission) {
     try {
       const result = await DeviceMotionEvent.requestPermission();
       return result === 'granted';
-    } catch(e) { return false; }
+    } catch(e) { 
+      console.warn('Permission error:', e);
+      return false; 
+    }
   }
-  return true; // Non-iOS Android
+  // Android / other: usually auto-granted
+  return true;
 }
 
 async function startSensors() {
@@ -653,61 +966,112 @@ async function startSensors() {
   if (!granted) {
     els.permissionModal.classList.remove('hidden');
     els.startBtn.disabled = false;
-    els.startBtn.textContent = '▶️ Başlat';
-    updateStatus('❌ İzin gerekli', '');
+    els.startBtn.textContent = '🚀 Başlat';
+    updateStatus('❌ İzin gerekli');
     return;
   }
   
   state.permissionGranted = true;
-  window.addEventListener('devicemotion', handleMotion, {passive:true});
+  
+  // Start listening with passive option for better performance
+  window.addEventListener('devicemotion', handleMotion, { passive: true });
   state.sensorsReady = true;
   
   // Load saved calibration
-  const saved = localStorage.getItem('punchCal_S22');
+  const saved = localStorage.getItem('punchUltra_cal');
   if (saved) {
     try {
       const cal = JSON.parse(saved);
       state.baseline = cal.baseline;
-      state.axis = cal.axis || 'z';
-      updateStatus(`✅ Hazır (${state.axis.toUpperCase()})`, 'ready');
-    } catch(e) { updateStatus('⚙️ Kalibre edin', ''); }
+      state.noiseStd = cal.noiseStd;
+      state.thresholds = cal.thresholds;
+      state.calibrated = true;
+      updateCalibrationBadge();
+      updateStatus('✅ Hazır - Vurmaya başla!');
+    } catch(e) {
+      updateStatus('⚙️ Kalibrasyon önerilir');
+    }
   } else {
-    updateStatus('⚙️ Kalibrasyon önerilir', '');
+    updateStatus('⚙️ Kalibrasyon ile daha iyi sonuç!');
   }
   
-  state.bestScore = parseInt(localStorage.getItem('punchBest_S22')) || 0;
+  // Load best score
+  state.bestScore = parseInt(localStorage.getItem('punchUltra_best')) || 0;
+  if (state.bestScore > 0) {
+    els.bestBadge.textContent = `• En İyi: ${fmt(state.bestScore)}`;
+  }
   renderHistory();
   
   els.startBtn.textContent = '✓ Aktif';
+  els.startBtn.style.background = 'linear-gradient(135deg, #15803d, #166534)';
 }
 
-// ====== TEST PUNCH (DEBUG) ======
+// ====== TEST PUNCH (Debug) ======
 function testPunch() {
-  // Manuel test: doğrudan yüksek değer simüle et
+  // Simulate a strong punch with realistic vector values
   state.mode = 'recording';
   state.windowData = [];
   state.windowStart = now();
-  state.metrics = {peak: 18, jerk: 45, impulse: 1.2}; // Test değerleri
   
-  // Görsel feedback
+  // Generate synthetic punch data
+  const baseVector = 18 + Math.random() * 12; // 18-30 m/s²
+  const baseJerk = 35 + Math.random() * 40;   // 35-75 m/s³
+  const baseImpulse = 0.8 + Math.random() * 1.5;
+  
+  for (let i = 0; i < 12; i++) {
+    const t = now() + i * 15;
+    const progress = i / 12;
+    // Simulate punch curve: rise then fall
+    const factor = Math.sin(progress * Math.PI) * (0.7 + Math.random() * 0.3);
+    state.windowData.push({
+      t,
+      x: (Math.random() - 0.5) * 3,
+      y: (Math.random() - 0.5) * 3,
+      z: baseVector * factor * (0.8 + Math.random() * 0.4),
+      mag: baseVector * factor,
+      jerk: baseJerk * factor * (0.5 + Math.random())
+    });
+  }
+  
+  state.metrics = {
+    peak: baseVector * 0.95,
+    jerk: baseJerk * 0.9,
+    impulse: baseImpulse,
+    vector: baseVector
+  };
+  
+  // Visual feedback
   els.punchCenter.classList.add('active');
-  updateStatus('🧪 Test vuruşu...', 'punching');
+  createParticles();
+  updateStatus('🧪 Test vuruşu...', true);
   
-  setTimeout(() => {
-    processPunch();
-  }, 150);
+  if (navigator.vibrate) navigator.vibrate([15, 8, 30]);
+  
+  setTimeout(processPunch, 160);
 }
 
 // ====== RESET ======
 function resetAll() {
-  if (confirm('Tüm veriler silinsin mi?')) {
-    localStorage.removeItem('punchCal_S22');
-    localStorage.removeItem('punchBest_S22');
-    state.history = []; state.bestScore = 0;
-    state.baseline = {x:0,y:0,z:0}; state.axis = 'z';
+  if (confirm('Tüm skorlar ve kalibrasyon silinsin mi?')) {
+    localStorage.removeItem('punchUltra_cal');
+    localStorage.removeItem('punchUltra_best');
+    
+    state.history = [];
+    state.bestScore = 0;
+    state.baseline = { x: 0, y: 0, z: 0 };
+    state.noiseStd = { x: 1, y: 1, z: 1 };
+    state.thresholds = { x: 8, y: 8, z: 8 };
+    state.calibrated = false;
+    
     els.score.textContent = '0000';
+    els.bestBadge.textContent = '';
+    updateCalibrationBadge();
     renderHistory();
-    updateStatus('🔄 Sıfırlandı', '');
+    resetPunchState();
+    updateStatus('🔄 Her şey sıfırlandı');
+    
+    els.startBtn.textContent = '🚀 Başlat';
+    els.startBtn.style.background = '';
   }
 }
 
@@ -716,43 +1080,62 @@ els.startBtn.addEventListener('click', startSensors);
 els.calibrateBtn.addEventListener('click', calibrate);
 els.testBtn.addEventListener('click', testPunch);
 els.resetBtn.addEventListener('click', resetAll);
-els.toggleDebug.addEventListener('click', () => {
-  state.debugVisible = !state.debugVisible;
-  els.toggleDebug.textContent = state.debugVisible ? 'Gizle' : 'Göster';
-  els.debugGrid.style.display = state.debugVisible ? 'grid' : 'none';
-});
 
 document.getElementById('grantPermission').addEventListener('click', async () => {
   els.permissionModal.classList.add('hidden');
   await startSensors();
 });
+
 document.getElementById('denyPermission').addEventListener('click', () => {
   els.permissionModal.classList.add('hidden');
   els.startBtn.disabled = false;
-  els.startBtn.textContent = '▶️ Başlat';
-});
-document.getElementById('cancelCalibration').addEventListener('click', () => {
-  els.calibrationOverlay.classList.add('hidden');
-  updateStatus('⚠️ İptal edildi', 'ready');
+  els.startBtn.textContent = '🚀 Başlat';
 });
 
-// Prevent zoom
-document.addEventListener('touchstart', e => { if(e.touches.length>1) e.preventDefault(); }, {passive:false});
+document.getElementById('cancelCalibration').addEventListener('click', () => {
+  els.calibrationOverlay.classList.add('hidden');
+  window.removeEventListener('devicemotion', calibrate);
+  updateStatus('⚠️ İptal edildi');
+});
+
+// Prevent accidental zoom/scroll on mobile
+document.addEventListener('touchstart', (e) => {
+  if (e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+
 let lastTouchEnd = 0;
-document.addEventListener('touchend', e => {
+document.addEventListener('touchend', (e) => {
   const n = Date.now();
   if (n - lastTouchEnd <= 300) e.preventDefault();
   lastTouchEnd = n;
-}, {passive:false});
+}, { passive: false });
 
-// Init
-updateStatus('📱 Başlat\'a bas', '');
-els.debugAxis.textContent = state.axis.toUpperCase();
+// Keyboard shortcut: Space to test
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' && state.sensorsReady) {
+    e.preventDefault();
+    if (state.calibrated && state.mode === 'idle') {
+      // Could trigger a "virtual punch" for testing
+    }
+  }
+});
+
+// ====== INIT ======
+updateStatus('📱 "Başlat" ile sensörleri aç');
+updateCalibrationBadge();
 
 // Auto-show permission modal on iOS
-if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !state.permissionGranted) {
   els.permissionModal.classList.remove('hidden');
 }
+
+// Visibility API: pause when tab not active
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && state.mode === 'recording') {
+    resetPunchState();
+    updateStatus('⏸️ Duraklatıldı');
+  }
+});
 </script>
 </body>
 </html>
