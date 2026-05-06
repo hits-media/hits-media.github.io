@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>🥊 Punch Machine Pro</title>
+<title>🥊 Punch Machine S22 Optimized</title>
 <style>
-* { box-sizing: border-box; touch-action: manipulation; }
+* { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 body {
   margin: 0;
   background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0f0f2a 100%);
@@ -16,338 +16,187 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 20px;
-  overflow: hidden;
+  padding: 12px;
+  overflow-x: hidden;
 }
 
-.container {
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
+.container { width: 100%; max-width: 420px; text-align: center; }
 
-header {
-  margin-bottom: 25px;
-}
-
+header { margin-bottom: 15px; }
 h1 {
-  font-size: 28px;
-  margin: 0 0 8px 0;
-  background: linear-gradient(90deg, #ff6b6b, #ffa500, #ff6b6b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 24px; margin: 0 0 5px 0;
+  background: linear-gradient(90deg, #ff6b6b, #ffa500);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   animation: glow 2s ease-in-out infinite;
 }
-
-@keyframes glow {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.3); }
-}
-
-.subtitle {
-  opacity: 0.7;
-  font-size: 14px;
-  margin: 0;
-}
+@keyframes glow { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.2)} }
+.subtitle { opacity:0.7; font-size:13px; margin:0; }
 
 /* Score Display */
 .score-container {
-  position: relative;
-  margin: 15px 0 25px;
-  padding: 20px;
-  background: rgba(30, 30, 60, 0.6);
-  border-radius: 20px;
-  border: 2px solid rgba(100, 150, 255, 0.3);
-  box-shadow: 0 0 30px rgba(100, 150, 255, 0.2);
+  margin: 10px 0 15px; padding: 15px;
+  background: rgba(30,30,60,0.6); border-radius: 16px;
+  border: 2px solid rgba(100,150,255,0.3);
+  box-shadow: 0 0 25px rgba(100,150,255,0.15);
 }
-
 #score {
-  font-size: 72px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -3px;
-  margin: 0;
-  text-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+  font-size: 64px; font-weight: 800; font-variant-numeric: tabular-nums;
+  letter-spacing: -2px; margin: 0;
+  text-shadow: 0 0 15px rgba(255,107,107,0.7);
   transition: transform 0.1s ease;
 }
-
-#score.punch {
-  animation: punchAnim 0.3s ease-out;
-}
-
+#score.punch { animation: punchAnim 0.25s ease-out; }
 @keyframes punchAnim {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15) rotate(-2deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0%{transform:scale(1)} 50%{transform:scale(1.12) rotate(-1.5deg)} 100%{transform:scale(1)}
 }
+.score-label { font-size:11px; opacity:0.6; margin-top:3px; text-transform:uppercase; letter-spacing:1.5px; }
 
-.score-label {
-  font-size: 12px;
-  opacity: 0.6;
-  margin-top: 5px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* Status & Metrics */
+/* Status */
 #status {
-  font-size: 16px;
-  padding: 10px 20px;
-  background: rgba(50, 50, 90, 0.5);
-  border-radius: 30px;
-  margin: 15px 0;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 14px; padding: 8px 16px;
+  background: rgba(50,50,90,0.5); border-radius: 24px;
+  margin: 10px 0; min-height: 36px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-
 .status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 8px;
-  background: #666;
-  transition: background 0.3s;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #666; transition: background 0.3s;
 }
-.status-dot.ready { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
-.status-dot.armed { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
-.status-dot.punching { background: #ef4444; box-shadow: 0 0 15px #ef4444; }
+.status-dot.ready { background:#22c55e; box-shadow:0 0 8px #22c55e; }
+.status-dot.armed { background:#f59e0b; box-shadow:0 0 8px #f59e0b; }
+.status-dot.punching { background:#ef4444; box-shadow:0 0 12px #ef4444; }
 
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin: 20px 0;
+/* Debug Panel */
+.debug-panel {
+  background: rgba(25,25,50,0.7); border-radius: 12px;
+  padding: 10px; margin: 10px 0; font-size: 11px;
+  border: 1px solid rgba(100,150,255,0.2);
 }
+.debug-title {
+  font-size: 12px; font-weight: 600; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.debug-toggle {
+  background: rgba(100,116,139,0.3); border: none; color: white;
+  padding: 3px 10px; border-radius: 8px; font-size: 10px; cursor: pointer;
+}
+.debug-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 6px;
+}
+.debug-item {
+  background: rgba(40,40,75,0.4); padding: 6px 4px; border-radius: 8px;
+}
+.debug-label { opacity:0.5; font-size: 9px; display:block; margin-bottom:2px; }
+.debug-value { font-weight: 600; font-size: 13px; color: #60a5fa; }
+.debug-value.active { color: #fbbf24; }
 
-.metric {
-  background: rgba(40, 40, 75, 0.5);
-  padding: 12px 8px;
-  border-radius: 12px;
-  font-size: 11px;
+/* Visual */
+.punch-visual {
+  width: 100px; height: 100px; margin: 12px auto; position: relative;
 }
-
-.metric-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: #60a5fa;
-  display: block;
-  margin-bottom: 2px;
+.punch-ring {
+  position: absolute; width: 100%; height: 100%;
+  border: 2px solid rgba(100,150,255,0.25); border-radius: 50%;
+  animation: pulse 1.8s infinite;
 }
-
-.metric-label {
-  opacity: 0.6;
-  font-size: 10px;
+.punch-ring:nth-child(2){animation-delay:0.4s}
+.punch-ring:nth-child(3){animation-delay:0.8s}
+@keyframes pulse { 0%{transform:scale(0.85);opacity:1} 100%{transform:scale(1.4);opacity:0} }
+.punch-center {
+  position: absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width: 32px; height: 32px;
+  background: radial-gradient(circle,#ff6b6b,#ef4444); border-radius: 50%;
+  box-shadow: 0 0 20px rgba(239,68,68,0.5); transition: transform 0.08s ease;
 }
+.punch-center.active { animation: hitFlash 0.15s ease-out; }
+@keyframes hitFlash { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.35)} }
 
 /* Buttons */
-.btn-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin: 20px 0;
-}
-
+.btn-group { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 12px 0; }
 button {
-  padding: 14px 24px;
-  border: none;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-width: 120px;
+  padding: 12px 18px; border: none; border-radius: 12px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; min-width: 100px;
 }
-
-button:active { transform: scale(0.98); }
-
+button:active { transform: scale(0.97); }
 .primary {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: white;
-  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(135deg,#22c55e,#16a34a); color: white;
+  box-shadow: 0 3px 15px rgba(34,197,94,0.35);
 }
-.primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
+.primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 .secondary {
-  background: rgba(100, 116, 139, 0.3);
-  color: white;
-  border: 1px solid rgba(100, 116, 139, 0.5);
+  background: rgba(100,116,139,0.25); color: white;
+  border: 1px solid rgba(100,116,139,0.4);
 }
-
-.danger {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: white;
-}
-
-/* Visual Punch Indicator */
-.punch-visual {
-  width: 120px;
-  height: 120px;
-  margin: 20px auto;
-  position: relative;
-}
-
-.punch-ring {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 3px solid rgba(100, 150, 255, 0.3);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-.punch-ring:nth-child(2) { animation-delay: 0.5s; }
-.punch-ring:nth-child(3) { animation-delay: 1s; }
-
-@keyframes pulse {
-  0% { transform: scale(0.8); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-.punch-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle, #ff6b6b, #ef4444);
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
-  transition: transform 0.1s ease;
-}
-.punch-center.active {
-  animation: hitFlash 0.2s ease-out;
-}
-@keyframes hitFlash {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.4); }
-}
+.danger { background: linear-gradient(135deg,#ef4444,#dc2626); color: white; }
 
 /* History */
-.history {
-  margin-top: 25px;
-  width: 100%;
-  max-width: 360px;
-}
-
-.history h3 {
-  font-size: 14px;
-  opacity: 0.7;
-  margin: 0 0 10px 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.history-list {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 5px 0;
-  scrollbar-width: none;
-}
-.history-list::-webkit-scrollbar { display: none; }
-
+.history { margin-top: 15px; width: 100%; }
+.history h3 { font-size: 12px; opacity:0.7; margin:0 0 8px 0; text-transform:uppercase; letter-spacing:1px; }
+.history-list { display: flex; gap: 6px; overflow-x: auto; padding: 3px 0; scrollbar-width:none; }
+.history-list::-webkit-scrollbar { display:none; }
 .history-item {
-  flex: 0 0 auto;
-  padding: 10px 16px;
-  background: rgba(50, 50, 90, 0.4);
-  border-radius: 10px;
-  text-align: center;
-  min-width: 70px;
+  flex:0 0 auto; padding: 8px 12px; background: rgba(50,50,90,0.35);
+  border-radius: 8px; text-align: center; min-width: 60px;
 }
-.history-item.best {
-  border: 2px solid #fbbf24;
-  background: rgba(251, 191, 36, 0.15);
-}
-.history-score {
-  font-size: 20px;
-  font-weight: 700;
-  color: #60a5fa;
-}
-.history-time {
-  font-size: 10px;
-  opacity: 0.5;
-  margin-top: 3px;
-}
+.history-item.best { border:2px solid #fbbf24; background:rgba(251,191,36,0.12); }
+.history-score { font-size: 17px; font-weight: 700; color: #60a5fa; }
+.history-time { font-size: 9px; opacity:0.5; margin-top: 2px; }
 
 /* Instructions */
 .instructions {
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(40, 50, 80, 0.3);
-  border-radius: 12px;
-  font-size: 12px;
-  line-height: 1.5;
-  text-align: left;
+  margin-top: 12px; padding: 10px 12px;
+  background: rgba(40,50,80,0.25); border-radius: 10px;
+  font-size: 11px; line-height: 1.4; text-align: left;
 }
-.instructions ol {
-  margin: 10px 0 0 20px;
-  padding: 0;
-}
-.instructions li { margin: 5px 0; }
+.instructions ol { margin: 8px 0 0 18px; padding: 0; }
+.instructions li { margin: 3px 0; }
 
-/* Permission Modal */
+/* Modal */
 .modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.88); display: flex;
+  align-items: center; justify-content: center; z-index: 1000; padding: 20px;
 }
 .modal.hidden { display: none; }
 .modal-content {
-  background: linear-gradient(135deg, #1e1e3f, #2a2a5a);
-  padding: 25px;
-  border-radius: 20px;
-  max-width: 340px;
-  text-align: center;
-  border: 1px solid rgba(100, 150, 255, 0.3);
+  background: linear-gradient(135deg,#1e1e3f,#2a2a5a);
+  padding: 20px; border-radius: 16px; max-width: 320px;
+  text-align: center; border: 1px solid rgba(100,150,255,0.25);
 }
-.modal h3 { margin: 0 0 15px 0; font-size: 20px; }
-.modal p { opacity: 0.8; font-size: 14px; margin: 0 0 20px 0; line-height: 1.5; }
-.modal-buttons { display: flex; gap: 10px; justify-content: center; }
+.modal h3 { margin: 0 0 12px 0; font-size: 18px; }
+.modal p { opacity: 0.85; font-size: 13px; margin: 0 0 16px 0; line-height: 1.4; }
+.modal-buttons { display: flex; gap: 8px; justify-content: center; }
 
-/* Calibration Overlay */
+/* Calibration */
 .calibration-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(10, 10, 30, 0.95);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 500;
-  padding: 30px;
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: rgba(10,10,30,0.96); display: flex;
+  flex-direction: column; align-items: center; justify-content: center;
+  z-index: 500; padding: 25px;
 }
 .calibration-overlay.hidden { display: none; }
 .calibration-progress {
-  width: 200px;
-  height: 200px;
-  border: 4px solid rgba(100, 150, 255, 0.3);
-  border-top-color: #60a5fa;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 20px 0;
+  width: 160px; height: 160px;
+  border: 3px solid rgba(100,150,255,0.25); border-top-color: #60a5fa;
+  border-radius: 50%; animation: spin 0.9s linear infinite; margin: 15px 0;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Responsive */
-@media (max-height: 700px) {
-  .score-container { margin: 10px 0 15px; padding: 15px; }
-  #score { font-size: 56px; }
-  .metrics { gap: 5px; }
-  .metric { padding: 8px 5px; }
-  .metric-value { font-size: 15px; }
+/* HTTPS Warning */
+.https-warning {
+  background: linear-gradient(135deg,#dc2626,#b91c1c);
+  color: white; padding: 10px 15px; border-radius: 10px;
+  margin: 10px 0; font-size: 12px; text-align: center;
+  display: none;
+}
+.https-warning.show { display: block; }
+
+@media (max-height: 650px) {
+  .score-container { margin: 8px 0 12px; padding: 12px; }
+  #score { font-size: 52px; }
+  .debug-grid { gap: 4px; }
+  .debug-value { font-size: 12px; }
 }
 </style>
 </head>
@@ -355,13 +204,17 @@ button:active { transform: scale(0.98); }
 
 <div class="container">
   <header>
-    <h1>🥊 Punch Machine Pro</h1>
-    <p class="subtitle">Telefonu sıkıca tut, geri çek ve sert vur!</p>
+    <h1>🥊 Punch Machine S22</h1>
+    <p class="subtitle">Telefonu sıkı tut • Geri çek • Sert vur!</p>
   </header>
+
+  <div class="https-warning" id="httpsWarning">
+    ⚠️ Sensörler için sayfayı <strong>https://</strong> üzerinden açmalısınız veya localhost kullanmalısınız.
+  </div>
 
   <div class="score-container">
     <div id="score">0000</div>
-    <div class="score-label">Maksimum Skor</div>
+    <div class="score-label">En Yüksek Skor</div>
   </div>
 
   <div id="status">
@@ -370,48 +223,64 @@ button:active { transform: scale(0.98); }
   </div>
 
   <div class="punch-visual">
-    <div class="punch-ring"></div>
-    <div class="punch-ring"></div>
-    <div class="punch-ring"></div>
+    <div class="punch-ring"></div><div class="punch-ring"></div><div class="punch-ring"></div>
     <div class="punch-center" id="punchCenter"></div>
   </div>
 
-  <div class="metrics">
-    <div class="metric">
-      <span class="metric-value" id="peakVal">0.0</span>
-      <span class="metric-label">Peak (m/s²)</span>
+  <!-- DEBUG PANEL -->
+  <div class="debug-panel">
+    <div class="debug-title">
+      <span>🔍 Sensör Verileri (S22)</span>
+      <button class="debug-toggle" id="toggleDebug">Gizle</button>
     </div>
-    <div class="metric">
-      <span class="metric-value" id="jerkVal">0</span>
-      <span class="metric-label">Jerk (m/s³)</span>
-    </div>
-    <div class="metric">
-      <span class="metric-value" id="impulseVal">0.0</span>
-      <span class="metric-label">Impulse</span>
+    <div class="debug-grid" id="debugGrid">
+      <div class="debug-item">
+        <span class="debug-label">Z Ekseni (m/s²)</span>
+        <span class="debug-value" id="debugZ">0.0</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">Jerk (ani değişim)</span>
+        <span class="debug-value" id="debugJerk">0</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">Durum</span>
+        <span class="debug-value" id="debugState">idle</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">Peak</span>
+        <span class="debug-value" id="debugPeak">0.0</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">Impulse</span>
+        <span class="debug-value" id="debugImpulse">0.0</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">Eksen</span>
+        <span class="debug-value" id="debugAxis">-</span>
+      </div>
     </div>
   </div>
 
   <div class="btn-group">
     <button class="primary" id="startBtn">▶️ Başlat</button>
-    <button class="secondary" id="calibrateBtn">⚙️ Kalibrasyon</button>
-    <button class="secondary" id="resetBtn">🔄 Sıfırla</button>
+    <button class="secondary" id="calibrateBtn">⚙️ Kalibre</button>
+    <button class="secondary" id="testBtn">🧪 Test Vuruş</button>
+    <button class="secondary" id="resetBtn">🔄 Reset</button>
   </div>
 
   <div class="history">
     <h3>🏆 Son Vuruşlar</h3>
-    <div class="history-list" id="historyList">
-      <!-- History items will be added here -->
-    </div>
+    <div class="history-list" id="historyList"></div>
   </div>
 
   <div class="instructions">
-    <strong>Nasıl Kullanılır:</strong>
+    <strong>Nasıl Yapılır:</strong>
     <ol>
-      <li>"Başlat"a bas ve izin ver</li>
-      <li>Telefonu iki elinle sıkıca tut</li>
-      <li>Önce geri çek (cocking pozisyonu)</li>
-      <li>Aniden öne doğru sertçe vur!</li>
-      <li>En yüksek skoru elde etmeye çalış</li>
+      <li>▶️ "Başlat"a bas ve "İzin Ver" de</li>
+      <li>Telefonu iki elinle sıkıca tut (ekran sana baksın)</li>
+      <li>Önce hafifçe <strong>geri çek</strong> (cocking)</li>
+      <li>Aniden <strong>öne doğru sertçe vur</strong>!</li>
+      <li>Debug panelinden sensör değerlerini izle</li>
     </ol>
   </div>
 </div>
@@ -420,7 +289,8 @@ button:active { transform: scale(0.98); }
 <div class="modal" id="permissionModal">
   <div class="modal-content">
     <h3>🔐 Sensör İzni Gerekli</h3>
-    <p>Punch Machine'in çalışması için ivmeölçer ve jiroskop erişimi gerekiyor. Lütfen "İzin Ver"e basın.</p>
+    <p>Punch Machine'in çalışması için ivmeölçer erişimi gerekiyor. Lütfen "İzin Ver"e basın.</p>
+    <p style="font-size:12px;opacity:0.7">Not: Chrome Android'de sensörler sadece HTTPS'de çalışır.</p>
     <div class="modal-buttons">
       <button class="primary" id="grantPermission">✅ İzin Ver</button>
       <button class="secondary" id="denyPermission">❌ İptal</button>
@@ -430,54 +300,53 @@ button:active { transform: scale(0.98); }
 
 <!-- Calibration Overlay -->
 <div class="calibration-overlay hidden" id="calibrationOverlay">
-  <h3>🔄 Kalibrasyon Yapılıyor</h3>
-  <p>Telefonu düz bir yüzeyde hareketsiz tutun...</p>
+  <h3>🔄 Kalibrasyon</h3>
+  <p>Telefonu düz yüzeyde hareketsiz tutun...</p>
   <div class="calibration-progress"></div>
   <p id="calibrationProgress">3 saniye kaldı</p>
   <button class="secondary" id="cancelCalibration">İptal</button>
 </div>
 
 <script>
-// ====== CONFIGURATION ======
+// ====== S22 OPTIMIZED CONFIG ======
 const CONFIG = {
-  // Detection thresholds (tuned for realistic punch detection)
-  COCKING_THRESHOLD: -6,      // Geri çekme eşiği (negatif ivme)
-  PUNCH_THRESHOLD: 12,         // Vuruş başlangıç eşiği
-  MIN_PEAK: 15,                // Minimum peak acceleration for valid punch
-  MIN_JERK: 30,                // Minimum jerk (acceleration change rate)
-  MIN_IMPULSE: 0.8,            // Minimum impulse area
+  // S22 için DÜŞÜK eşikler (sensör değerlerini debug panelinden kontrol edin)
+  COCKING_THRESHOLD: -3.5,    // Geri çekme: daha hassas
+  PUNCH_THRESHOLD: 6,          // Vuruş başlangıcı: daha düşük
+  MIN_PEAK: 8,                 // Minimum peak: S22 için optimize
+  MIN_JERK: 15,                // Minimum jerk
+  MIN_IMPULSE: 0.4,            // Minimum impulse
   
-  // Scoring parameters (physics-based)
-  SCORE_PEAK_WEIGHT: 0.35,
-  SCORE_JERK_WEIGHT: 0.40,
+  // Scoring - S22 sensör aralıklarına göre ayarlandı
+  SCORE_PEAK_WEIGHT: 0.4,
+  SCORE_JERK_WEIGHT: 0.35,
   SCORE_IMPULSE_WEIGHT: 0.25,
   SCORE_SCALE: 9999,
-  SCORE_EXPONENT: 2.0,
-  SCORE_DECAY: 45,
+  SCORE_EXPONENT: 1.8,
+  SCORE_DECAY: 28,             // Daha düşük = daha hızlı skor artışı
   
-  // Timing
-  CALIBRATION_DURATION: 3000,  // 3 seconds calibration
-  PUNCH_WINDOW: 250,           // ms to capture punch data
-  COCKING_TIMEOUT: 800,        // max time between cocking and punch
+  // Timing - Android rate limit'e uygun
+  CALIBRATION_DURATION: 2500,  // 2.5 saniye
+  PUNCH_WINDOW: 200,           // ms - daha kısa pencere
+  COCKING_TIMEOUT: 600,        // geri çekme-punch arası max süre
   
   // Filtering
-  SMOOTHING_FACTOR: 0.15,      // Low-pass filter for noise reduction
-  MIN_SAMPLES: 8,              // Minimum samples in punch window
+  SMOOTHING_FACTOR: 0.25,      // Daha az smoothing = daha hızlı tepki
+  MIN_SAMPLES: 5,              // Daha az örnek yeterli
   
-  // Haptics
-  VIBRATE_PATTERN: [15, 10, 30, 10, 50],
+  // Debug
+  DEBUG_UPDATE_MS: 50,         // Debug panel güncelleme hızı
   
-  // History
+  VIBRATE_PATTERN: [12,8,25,8,40],
   MAX_HISTORY: 10
 };
 
 // ====== STATE ======
 const state = {
-  axis: null,
-  baseline: { x: 0, y: 0, z: 0 },
-  gyroBaseline: { x: 0, y: 0, z: 0 },
+  axis: 'z',  // S22'de genelde Z ekseni en iyi çalışır
+  baseline: {x:0,y:0,z:0},
   
-  mode: 'idle', // idle, armed, recording, processing
+  mode: 'idle',
   windowData: [],
   windowStart: 0,
   cockingTime: 0,
@@ -486,147 +355,149 @@ const state = {
   lastAccel: 0,
   smoothedAccel: 0,
   
-  metrics: { peak: 0, jerk: 0, impulse: 0 },
-  
+  metrics: {peak:0,jerk:0,impulse:0},
   history: [],
   bestScore: 0,
   
   sensorsReady: false,
-  permissionGranted: false
+  permissionGranted: false,
+  debugVisible: true,
+  
+  // Debug throttling
+  lastDebugUpdate: 0
 };
 
-// ====== DOM ELEMENTS ======
+// ====== DOM ======
 const els = {
   score: document.getElementById('score'),
   statusText: document.getElementById('statusText'),
   statusDot: document.getElementById('statusDot'),
   punchCenter: document.getElementById('punchCenter'),
-  peakVal: document.getElementById('peakVal'),
-  jerkVal: document.getElementById('jerkVal'),
-  impulseVal: document.getElementById('impulseVal'),
+  
+  // Debug elements
+  debugZ: document.getElementById('debugZ'),
+  debugJerk: document.getElementById('debugJerk'),
+  debugState: document.getElementById('debugState'),
+  debugPeak: document.getElementById('debugPeak'),
+  debugImpulse: document.getElementById('debugImpulse'),
+  debugAxis: document.getElementById('debugAxis'),
+  debugGrid: document.getElementById('debugGrid'),
+  
   startBtn: document.getElementById('startBtn'),
   calibrateBtn: document.getElementById('calibrateBtn'),
+  testBtn: document.getElementById('testBtn'),
   resetBtn: document.getElementById('resetBtn'),
+  toggleDebug: document.getElementById('toggleDebug'),
   historyList: document.getElementById('historyList'),
+  
   permissionModal: document.getElementById('permissionModal'),
   calibrationOverlay: document.getElementById('calibrationOverlay'),
-  calibrationProgress: document.getElementById('calibrationProgress')
+  calibrationProgress: document.getElementById('calibrationProgress'),
+  httpsWarning: document.getElementById('httpsWarning')
 };
 
-// ====== UTILITIES ======
+// ====== UTILS ======
 const now = () => Date.now();
-const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-const lerp = (a, b, t) => a + (b - a) * t;
+const clamp = (v,min,max) => Math.max(min, Math.min(max, v));
+const lerp = (a,b,t) => a + (b-a)*t;
+const fmt = v => Math.floor(clamp(v,0,CONFIG.SCORE_SCALE)).toString().padStart(4,'0');
 
-function formatScore(val) {
-  return Math.floor(clamp(val, 0, CONFIG.SCORE_SCALE))
-    .toString().padStart(4, '0');
-}
-
-function updateStatus(text, statusClass) {
+function updateStatus(text, cls) {
   els.statusText.textContent = text;
-  els.statusDot.className = 'status-dot' + (statusClass ? ` ${statusClass}` : '');
+  els.statusDot.className = 'status-dot' + (cls ? ` ${cls}` : '');
 }
 
-function updateMetrics(peak, jerk, impulse) {
-  els.peakVal.textContent = peak.toFixed(1);
-  els.jerkVal.textContent = Math.floor(jerk);
-  els.impulseVal.textContent = impulse.toFixed(2);
+// ====== DEBUG UPDATE ======
+function updateDebug(accel, jerk, mode, peak, impulse) {
+  if (!state.debugVisible) return;
+  const t = now();
+  if (t - state.lastDebugUpdate < CONFIG.DEBUG_UPDATE_MS) return;
+  state.lastDebugUpdate = t;
+  
+  els.debugZ.textContent = accel.toFixed(1);
+  els.debugJerk.textContent = Math.floor(jerk);
+  els.debugState.textContent = mode;
+  els.debugPeak.textContent = peak.toFixed(1);
+  els.debugImpulse.textContent = impulse.toFixed(2);
+  els.debugAxis.textContent = state.axis?.toUpperCase() || '-';
+  
+  // Renkli highlight for active values
+  els.debugZ.classList.toggle('active', Math.abs(accel) > 5);
+  els.debugJerk.classList.toggle('active', jerk > 20);
 }
 
 // ====== SENSOR HANDLING ======
-function handleDeviceMotion(e) {
+function handleMotion(e) {
   if (!state.sensorsReady || state.mode === 'processing') return;
   
   const t = now();
-  const dt = Math.max(0.008, (t - state.lastTime) / 1000); // Min 8ms
+  const dt = Math.max(0.005, (t - state.lastTime)/1000);
   state.lastTime = t;
   
   const acc = e.accelerationIncludingGravity;
-  const gyro = e.rotationRate;
-  
   if (!acc) return;
   
-  // Apply low-pass smoothing to reduce noise
+  // S22: Z ekseni genellikle en tutarlı (telefon dikey tutulduğunda)
   const raw = {
     x: acc.x - state.baseline.x,
     y: acc.y - state.baseline.y,
     z: acc.z - state.baseline.z
   };
   
-  // Use primary axis (determined during calibration)
   const axis = state.axis || 'z';
   let value = raw[axis] || 0;
   
-  // Incorporate gyroscope for rotational punch detection
-  if (gyro && state.gyroBaseline) {
-    const gyroMag = Math.sqrt(
-      Math.pow(gyro.x - state.gyroBaseline.x, 2) +
-      Math.pow(gyro.y - state.gyroBaseline.y, 2) +
-      Math.pow(gyro.z - state.gyroBaseline.z, 2)
-    );
-    // Add 20% gyro contribution for rotational punches
-    value = value * 0.8 + gyroMag * 2 * 0.2;
-  }
-  
-  // Smoothing
+  // Smoothing - S22 için optimize
   state.smoothedAccel = lerp(state.smoothedAccel, value, CONFIG.SMOOTHING_FACTOR);
   const accel = state.smoothedAccel;
   
-  // Calculate jerk (rate of change of acceleration)
+  // Jerk calculation
   const jerk = Math.abs((accel - state.lastAccel) / dt);
   state.lastAccel = accel;
   
+  // ===== DEBUG PANEL =====
+  updateDebug(accel, jerk, state.mode, state.metrics.peak, state.metrics.impulse);
+  
   // ===== STATE MACHINE =====
   
-  // IDLE → ARMED (cocking motion: pull back)
+  // IDLE → ARMED (geri çekme)
   if (state.mode === 'idle' && accel < CONFIG.COCKING_THRESHOLD) {
     state.mode = 'armed';
     state.cockingTime = t;
     updateStatus('🎯 Geri çektin! Şimdi vur!', 'armed');
   }
   
-  // ARMED timeout (if no punch within time limit)
+  // ARMED timeout
   if (state.mode === 'armed' && t - state.cockingTime > CONFIG.COCKING_TIMEOUT) {
     state.mode = 'idle';
-    updateStatus('⏰ Çok yavaş! Tekrar dene', 'ready');
+    updateStatus('⏰ Tekrar dene', 'ready');
   }
   
-  // ARMED → RECORDING (punch detected: forward motion)
+  // ARMED → RECORDING (vuruş)
   if (state.mode === 'armed' && accel > CONFIG.PUNCH_THRESHOLD) {
     state.mode = 'recording';
     state.windowData = [];
     state.windowStart = t;
-    state.metrics = { peak: 0, jerk: 0, impulse: 0 };
+    state.metrics = {peak:0,jerk:0,impulse:0};
     els.punchCenter.classList.add('active');
     updateStatus('💥 VURDUN!', 'punching');
   }
   
-  // RECORDING: collect data
+  // RECORDING
   if (state.mode === 'recording') {
-    state.windowData.push({ t, v: accel, j: jerk });
+    state.windowData.push({t, v:accel, j:jerk});
     
-    // Track metrics in real-time
     state.metrics.peak = Math.max(state.metrics.peak, Math.abs(accel));
     state.metrics.jerk = Math.max(state.metrics.jerk, jerk);
-    if (accel > 0) {
-      state.metrics.impulse += accel * dt;
-    }
-    updateMetrics(state.metrics.peak, state.metrics.jerk, state.metrics.impulse);
+    if (accel > 0) state.metrics.impulse += accel * dt;
     
-    // End recording after window duration
     if (t - state.windowStart >= CONFIG.PUNCH_WINDOW) {
       processPunch();
     }
   }
 }
 
-function handleDeviceOrientation(e) {
-  // Optional: use orientation for additional context
-  // Currently using rotationRate from devicemotion
-}
-
-// ====== PUNCH PROCESSING ======
+// ====== PROCESS PUNCH ======
 function processPunch() {
   state.mode = 'processing';
   els.punchCenter.classList.remove('active');
@@ -634,19 +505,18 @@ function processPunch() {
   const data = state.windowData;
   const m = state.metrics;
   
-  // Validate punch
   if (data.length < CONFIG.MIN_SAMPLES) {
-    resetPunch('❌ Çok az veri');
+    resetPunch('❌ Yetersiz veri');
     return;
   }
   
-  // Apply validation filters
+  // S22 için daha düşük eşikler
   if (m.peak < CONFIG.MIN_PEAK) {
-    resetPunch('💪 Daha sert vurmalısın!');
+    resetPunch('💪 Daha sert!');
     return;
   }
   if (m.jerk < CONFIG.MIN_JERK) {
-    resetPunch('⚡ Daha ani hareket et!');
+    resetPunch('⚡ Daha ani hareket!');
     return;
   }
   if (m.impulse < CONFIG.MIN_IMPULSE) {
@@ -654,195 +524,125 @@ function processPunch() {
     return;
   }
   
-  // ===== PHYSICS-BASED SCORING =====
-  // Combine metrics with weighted formula
+  // ===== SCORING (S22 optimize) =====
   const weighted = 
     m.peak * CONFIG.SCORE_PEAK_WEIGHT +
-    m.jerk * CONFIG.SCORE_JERK_WEIGHT * 0.1 +  // Scale jerk appropriately
-    m.impulse * CONFIG.SCORE_IMPULSE_WEIGHT * 10; // Scale impulse
+    m.jerk * CONFIG.SCORE_JERK_WEIGHT * 0.08 +
+    m.impulse * CONFIG.SCORE_IMPULSE_WEIGHT * 8;
   
-  // Non-linear scoring curve for better distribution
-  // Uses sigmoid-like function to map to 0-9999
   const rawScore = CONFIG.SCORE_SCALE * 
     Math.pow(1 - Math.exp(-weighted / CONFIG.SCORE_DECAY), CONFIG.SCORE_EXPONENT);
   
   let finalScore = Math.floor(clamp(rawScore, 0, CONFIG.SCORE_SCALE));
   
-  // Bonus for exceptional values
-  if (m.peak > 35) finalScore = Math.min(9999, finalScore + 200);
-  if (m.jerk > 80) finalScore = Math.min(9999, finalScore + 150);
+  // Bonus
+  if (m.peak > 20) finalScore = Math.min(9999, finalScore + 150);
+  if (m.jerk > 50) finalScore = Math.min(9999, finalScore + 100);
   
-  // Update display
-  els.score.textContent = formatScore(finalScore);
+  // Update UI
+  els.score.textContent = fmt(finalScore);
   els.score.classList.add('punch');
-  setTimeout(() => els.score.classList.remove('punch'), 300);
+  setTimeout(() => els.score.classList.remove('punch'), 250);
   
-  // Haptic feedback
+  // Haptic
   if (navigator.vibrate) {
-    const intensity = clamp(finalScore / 200, 10, 200);
-    navigator.vibrate([15, 10, intensity, 10, 30]);
+    navigator.vibrate([12,8,clamp(finalScore/180,15,180),8,25]);
   }
   
-  // Update history
+  // History
   addToHistory(finalScore);
+  updateStatus(`🔥 ${finalScore} puan!`, 'ready');
   
-  // Status update
-  updateStatus(`🔥 ${finalScore} puan! Harika!`, 'ready');
-  
-  // Reset after delay
-  setTimeout(resetPunchState, 1500);
+  setTimeout(resetPunchState, 1200);
 }
 
-function resetPunch(message) {
-  updateStatus(message || 'Hazır', 'ready');
+function resetPunch(msg) {
+  updateStatus(msg || 'Hazır', 'ready');
   resetPunchState();
 }
 
 function resetPunchState() {
   state.mode = 'idle';
   state.windowData = [];
-  state.metrics = { peak: 0, jerk: 0, impulse: 0 };
-  updateMetrics(0, 0, 0);
+  state.metrics = {peak:0,jerk:0,impulse:0};
 }
 
-// ====== HISTORY MANAGEMENT ======
+// ====== HISTORY ======
 function addToHistory(score) {
-  state.history.unshift({ score, time: new Date() });
-  if (state.history.length > CONFIG.MAX_HISTORY) {
-    state.history.pop();
-  }
-  
+  state.history.unshift({score, time:new Date()});
+  if (state.history.length > CONFIG.MAX_HISTORY) state.history.pop();
   if (score > state.bestScore) {
     state.bestScore = score;
-    localStorage.setItem('punchBestScore', state.bestScore);
+    localStorage.setItem('punchBest_S22', score);
   }
-  
   renderHistory();
 }
 
 function renderHistory() {
   els.historyList.innerHTML = '';
-  
-  state.history.forEach((item, idx) => {
+  state.history.forEach(item => {
     const div = document.createElement('div');
     div.className = 'history-item' + (item.score === state.bestScore ? ' best' : '');
-    div.innerHTML = `
-      <div class="history-score">${formatScore(item.score)}</div>
-      <div class="history-time">${item.time.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit',second:'2-digit'})}</div>
-    `;
+    div.innerHTML = `<div class="history-score">${fmt(item.score)}</div><div class="history-time">${item.time.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>`;
     els.historyList.appendChild(div);
   });
 }
 
 // ====== CALIBRATION ======
 function calibrate() {
-  if (!state.sensorsReady) {
-    updateStatus('⚠️ Önce sensörleri başlat', '');
-    return;
-  }
+  if (!state.sensorsReady) { updateStatus('⚠️ Önce başlat', ''); return; }
   
   els.calibrationOverlay.classList.remove('hidden');
   updateStatus('🔄 Kalibrasyon...', '');
   
-  const samples = [];
-  const gyroSamples = [];
-  const startTime = now();
+  const samples = [], start = now();
   
   function collect(e) {
     const acc = e.accelerationIncludingGravity;
-    const gyro = e.rotationRate;
+    if (acc) samples.push({x:acc.x,y:acc.y,z:acc.z});
     
-    if (acc) {
-      samples.push({ x: acc.x, y: acc.y, z: acc.z });
-    }
-    if (gyro) {
-      gyroSamples.push({ x: gyro.x, y: gyro.y, z: gyro.z });
-    }
-    
-    const elapsed = now() - startTime;
-    const remaining = Math.ceil((CONFIG.CALIBRATION_DURATION - elapsed) / 1000);
-    els.calibrationProgress.textContent = remaining > 0 ? `${remaining} saniye kaldı` : 'Tamamlanıyor...';
+    const elapsed = now() - start;
+    const rem = Math.ceil((CONFIG.CALIBRATION_DURATION - elapsed)/1000);
+    els.calibrationProgress.textContent = rem > 0 ? `${rem}s kaldı` : 'Tamamlanıyor...';
     
     if (elapsed >= CONFIG.CALIBRATION_DURATION) {
       window.removeEventListener('devicemotion', collect);
-      finalizeCalibration(samples, gyroSamples);
+      finalizeCalibration(samples);
     }
   }
-  
   window.addEventListener('devicemotion', collect);
 }
 
-function finalizeCalibration(samples, gyroSamples) {
+function finalizeCalibration(samples) {
   els.calibrationOverlay.classList.add('hidden');
+  if (samples.length < 20) { updateStatus('❌ Başarısız', ''); return; }
   
-  if (samples.length < 30) {
-    updateStatus('❌ Kalibrasyon başarısız', '');
-    return;
-  }
-  
-  // Calculate averages
-  const avg = { x: 0, y: 0, z: 0 };
-  samples.forEach(s => {
-    avg.x += s.x; avg.y += s.y; avg.z += s.z;
-  });
-  avg.x /= samples.length;
-  avg.y /= samples.length;
-  avg.z /= samples.length;
-  
+  const avg = {x:0,y:0,z:0};
+  samples.forEach(s => { avg.x+=s.x; avg.y+=s.y; avg.z+=s.z; });
+  avg.x/=samples.length; avg.y/=samples.length; avg.z/=samples.length;
   state.baseline = avg;
   
-  // Determine primary axis (most sensitive to motion)
-  const std = {
-    x: Math.sqrt(samples.reduce((sum, s) => sum + Math.pow(s.x - avg.x, 2), 0) / samples.length),
-    y: Math.sqrt(samples.reduce((sum, s) => sum + Math.pow(s.y - avg.y, 2), 0) / samples.length),
-    z: Math.sqrt(samples.reduce((sum, s) => sum + Math.pow(s.z - avg.z, 2), 0) / samples.length)
-  };
+  // S22: Z eksenini varsayılan yap (daha tutarlı)
+  state.axis = 'z';
   
-  // Use axis with highest variance as primary (most responsive to motion)
-  state.axis = std.x > std.y && std.x > std.z ? 'x' : (std.y > std.z ? 'y' : 'z');
-  
-  // Gyroscope baseline
-  if (gyroSamples.length > 0) {
-    const gAvg = { x: 0, y: 0, z: 0 };
-    gyroSamples.forEach(g => {
-      gAvg.x += g.x; gAvg.y += g.y; gAvg.z += g.z;
-    });
-    gAvg.x /= gyroSamples.length;
-    gAvg.y /= gyroSamples.length;
-    gAvg.z /= gyroSamples.length;
-    state.gyroBaseline = gAvg;
-  }
-  
-  // Save calibration
-  localStorage.setItem('punchCalibration', JSON.stringify({
-    baseline: state.baseline,
-    axis: state.axis,
-    gyroBaseline: state.gyroBaseline
-  }));
-  
-  updateStatus(`✅ Kalibre edildi (${state.axis.toUpperCase()} ekseni)`, 'ready');
-  
-  // Auto-start listening after calibration
-  if (!window._motionListenerActive) {
-    window.addEventListener('devicemotion', handleDeviceMotion);
-    window.addEventListener('deviceorientation', handleDeviceOrientation);
-    window._motionListenerActive = true;
-  }
+  localStorage.setItem('punchCal_S22', JSON.stringify({baseline:state.baseline,axis:state.axis}));
+  updateStatus(`✅ Kalibre (Z ekseni)`, 'ready');
 }
 
-// ====== PERMISSION & INIT ======
+// ====== PERMISSION & START ======
 async function requestPermission() {
+  // HTTPS check
+  if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    els.httpsWarning.classList.add('show');
+  }
+  
   if (typeof DeviceMotionEvent !== 'undefined' && DeviceMotionEvent.requestPermission) {
     try {
       const result = await DeviceMotionEvent.requestPermission();
       return result === 'granted';
-    } catch (e) {
-      console.warn('Permission error:', e);
-      return false;
-    }
+    } catch(e) { return false; }
   }
-  // Non-iOS devices usually don't require explicit permission
-  return true;
+  return true; // Non-iOS Android
 }
 
 async function startSensors() {
@@ -850,101 +650,106 @@ async function startSensors() {
   els.startBtn.textContent = 'Başlatılıyor...';
   
   const granted = await requestPermission();
-  
   if (!granted) {
     els.permissionModal.classList.remove('hidden');
     els.startBtn.disabled = false;
     els.startBtn.textContent = '▶️ Başlat';
-    updateStatus('❌ İzin reddedildi', '');
+    updateStatus('❌ İzin gerekli', '');
     return;
   }
   
   state.permissionGranted = true;
-  
-  // Start listening
-  window.addEventListener('devicemotion', handleDeviceMotion);
-  window.addEventListener('deviceorientation', handleDeviceOrientation);
-  window._motionListenerActive = true;
-  
+  window.addEventListener('devicemotion', handleMotion, {passive:true});
   state.sensorsReady = true;
   
-  // Load saved calibration if exists
-  const saved = localStorage.getItem('punchCalibration');
+  // Load saved calibration
+  const saved = localStorage.getItem('punchCal_S22');
   if (saved) {
     try {
       const cal = JSON.parse(saved);
       state.baseline = cal.baseline;
-      state.axis = cal.axis;
-      state.gyroBaseline = cal.gyroBaseline || { x: 0, y: 0, z: 0 };
+      state.axis = cal.axis || 'z';
       updateStatus(`✅ Hazır (${state.axis.toUpperCase()})`, 'ready');
-    } catch (e) {
-      updateStatus('⚙️ Kalibrasyon yapın', '');
-    }
+    } catch(e) { updateStatus('⚙️ Kalibre edin', ''); }
   } else {
     updateStatus('⚙️ Kalibrasyon önerilir', '');
   }
   
-  // Load best score
-  state.bestScore = parseInt(localStorage.getItem('punchBestScore')) || 0;
+  state.bestScore = parseInt(localStorage.getItem('punchBest_S22')) || 0;
   renderHistory();
   
   els.startBtn.textContent = '✓ Aktif';
 }
 
+// ====== TEST PUNCH (DEBUG) ======
+function testPunch() {
+  // Manuel test: doğrudan yüksek değer simüle et
+  state.mode = 'recording';
+  state.windowData = [];
+  state.windowStart = now();
+  state.metrics = {peak: 18, jerk: 45, impulse: 1.2}; // Test değerleri
+  
+  // Görsel feedback
+  els.punchCenter.classList.add('active');
+  updateStatus('🧪 Test vuruşu...', 'punching');
+  
+  setTimeout(() => {
+    processPunch();
+  }, 150);
+}
+
+// ====== RESET ======
 function resetAll() {
-  if (confirm('Tüm skorlar ve ayarlar sıfırlansın mı?')) {
-    localStorage.removeItem('punchCalibration');
-    localStorage.removeItem('punchBestScore');
-    state.history = [];
-    state.bestScore = 0;
-    state.baseline = { x: 0, y: 0, z: 0 };
-    state.gyroBaseline = { x: 0, y: 0, z: 0 };
-    state.axis = null;
+  if (confirm('Tüm veriler silinsin mi?')) {
+    localStorage.removeItem('punchCal_S22');
+    localStorage.removeItem('punchBest_S22');
+    state.history = []; state.bestScore = 0;
+    state.baseline = {x:0,y:0,z:0}; state.axis = 'z';
     els.score.textContent = '0000';
     renderHistory();
-    updateStatus('🔄 Her şey sıfırlandı', '');
+    updateStatus('🔄 Sıfırlandı', '');
   }
 }
 
 // ====== EVENT LISTENERS ======
 els.startBtn.addEventListener('click', startSensors);
 els.calibrateBtn.addEventListener('click', calibrate);
+els.testBtn.addEventListener('click', testPunch);
 els.resetBtn.addEventListener('click', resetAll);
+els.toggleDebug.addEventListener('click', () => {
+  state.debugVisible = !state.debugVisible;
+  els.toggleDebug.textContent = state.debugVisible ? 'Gizle' : 'Göster';
+  els.debugGrid.style.display = state.debugVisible ? 'grid' : 'none';
+});
 
 document.getElementById('grantPermission').addEventListener('click', async () => {
   els.permissionModal.classList.add('hidden');
   await startSensors();
 });
-
 document.getElementById('denyPermission').addEventListener('click', () => {
   els.permissionModal.classList.add('hidden');
   els.startBtn.disabled = false;
   els.startBtn.textContent = '▶️ Başlat';
-  updateStatus('❌ İzin gerekli', '');
 });
-
 document.getElementById('cancelCalibration').addEventListener('click', () => {
   els.calibrationOverlay.classList.add('hidden');
-  window.removeEventListener('devicemotion', calibrate);
-  updateStatus('⚠️ Kalibrasyon iptal edildi', 'ready');
+  updateStatus('⚠️ İptal edildi', 'ready');
 });
 
-// Prevent accidental zoom on double-tap
-document.addEventListener('touchstart', (e) => {
-  if (e.touches.length > 1) e.preventDefault();
-}, { passive: false });
-
+// Prevent zoom
+document.addEventListener('touchstart', e => { if(e.touches.length>1) e.preventDefault(); }, {passive:false});
 let lastTouchEnd = 0;
-document.addEventListener('touchend', (e) => {
-  const now = Date.now();
-  if (now - lastTouchEnd <= 300) e.preventDefault();
-  lastTouchEnd = now;
-}, { passive: false });
+document.addEventListener('touchend', e => {
+  const n = Date.now();
+  if (n - lastTouchEnd <= 300) e.preventDefault();
+  lastTouchEnd = n;
+}, {passive:false});
 
-// Initial status
+// Init
 updateStatus('📱 Başlat\'a bas', '');
+els.debugAxis.textContent = state.axis.toUpperCase();
 
-// Check for iOS and show appropriate guidance
+// Auto-show permission modal on iOS
 if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
   els.permissionModal.classList.remove('hidden');
 }
