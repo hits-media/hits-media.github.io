@@ -7,74 +7,40 @@
 <title>🥊 Punch Machine Pro</title>
 <style>
 :root {
-  --bg-primary: #0a0a1a;
-  --bg-secondary: #1a1a3a;
-  --accent-green: #22c55e;
-  --accent-orange: #f59e0b;
-  --accent-red: #ef4444;
-  --accent-blue: #60a5fa;
-  --accent-purple: #a78bfa;
-  --text-primary: #ffffff;
+  --bg-primary: #0a0a1a; --bg-secondary: #1a1a3a;
+  --accent-green: #22c55e; --accent-orange: #f59e0b;
+  --accent-red: #ef4444; --accent-blue: #60a5fa;
+  --accent-purple: #a78bfa; --text-primary: #ffffff;
   --text-secondary: rgba(255,255,255,0.7);
   --card-bg: rgba(30, 30, 60, 0.7);
   --card-border: rgba(100, 150, 255, 0.3);
   --glow-green: 0 0 25px rgba(34, 197, 94, 0.5);
   --glow-red: 0 0 30px rgba(239, 68, 68, 0.6);
-  --glove-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
 }
-
 * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-
-@font-face {
-  font-family: 'ScoreFont';
-  src: local('Arial Black'), local('Impact'), sans-serif;
-  font-weight: 900;
-}
-
+@font-face { font-family: 'ScoreFont'; src: local('Arial Black'), local('Impact'), sans-serif; font-weight: 900; }
 body {
-  margin: 0;
-  background: radial-gradient(ellipse at top, #1a1a4a 0%, var(--bg-primary) 60%);
-  color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  padding: 16px 12px;
-  overflow-x: hidden;
+  margin: 0; background: radial-gradient(ellipse at top, #1a1a4a 0%, var(--bg-primary) 60%);
+  color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  min-height: 100vh; padding: 16px 12px; overflow-x: hidden;
 }
-
 .container { width: 100%; max-width: 440px; text-align: center; }
-
-/* Header */
 header { margin: 8px 0 12px; animation: fadeInDown 0.5s ease; }
 @keyframes fadeInDown { from { opacity:0; transform:translateY(-20px) } to { opacity:1; transform:translateY(0) } }
-
 h1 {
   font-size: 26px; margin: 0 0 4px 0; font-weight: 800;
   background: linear-gradient(135deg, #ff6b6b 0%, #f59e0b 35%, #22c55e 70%, #60a5fa 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  animation: rainbow 4s linear infinite;
-  background-size: 300% 300%;
+  background-clip: text; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  animation: rainbow 4s linear infinite; background-size: 300% 300%;
 }
-@keyframes rainbow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+@keyframes rainbow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 .subtitle { opacity: 0.75; font-size: 13px; margin: 0; font-weight: 400; }
-
-/* HTTPS Warning */
 .https-warning {
-  background: linear-gradient(135deg, #dc2626, #991b1b);
-  color: white; padding: 10px 14px; border-radius: 12px;
-  margin: 8px 0 12px; font-size: 12px; text-align: center;
-  display: none; animation: slideIn 0.3s ease;
-  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(135deg, #dc2626, #991b1b); color: white;
+  padding: 10px 14px; border-radius: 12px; margin: 8px 0 12px;
+  font-size: 12px; text-align: center; display: none; animation: slideIn 0.3s ease;
 }
 .https-warning.show { display: block; }
 @keyframes slideIn { from { opacity:0; transform:translateY(-10px) } to { opacity:1; transform:translateY(0) } }
@@ -84,10 +50,9 @@ h1 {
   margin: 8px 0 14px; padding: 18px 20px;
   background: linear-gradient(145deg, var(--card-bg), rgba(25,25,55,0.8));
   border-radius: 20px; border: 1px solid var(--card-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), var(--glow-green);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), var(--glow-green);
   position: relative; overflow: hidden;
 }
-
 #score {
   font-family: 'ScoreFont', 'Arial Black', Impact, sans-serif;
   font-size: 72px; font-weight: 900; font-variant-numeric: tabular-nums;
@@ -97,341 +62,193 @@ h1 {
   background: linear-gradient(180deg, #fff 0%, #ffb3b3 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-#score.punch { 
-  animation: punchImpact 0.25s cubic-bezier(0.36, 0, 0.66, -0.56);
-  text-shadow: 0 0 30px rgba(255,107,107,1), 0 0 60px rgba(255,107,107,0.6);
-}
+#score.punch { animation: punchImpact 0.25s cubic-bezier(0.36, 0, 0.66, -0.56); }
 @keyframes punchImpact {
-  0% { transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.18) rotate(-2deg); }
-  50% { transform: scale(0.95) rotate(1deg); }
-  75% { transform: scale(1.05) rotate(-0.5deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0%{transform:scale(1)rotate(0)} 25%{transform:scale(1.18)rotate(-2deg)}
+  50%{transform:scale(0.95)rotate(1deg)} 75%{transform:scale(1.05)rotate(-0.5deg)} 100%{transform:scale(1)}
 }
-
-.score-label {
-  font-size: 11px; opacity: 0.65; margin-top: 6px;
-  text-transform: uppercase; letter-spacing: 2.5px; font-weight: 500;
-}
-
+.score-label { font-size: 11px; opacity: 0.65; margin-top: 6px; text-transform: uppercase; letter-spacing: 2.5px; }
 .score-badge {
   display: inline-block; padding: 4px 12px; margin-top: 8px;
-  background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4);
   border-radius: 20px; font-size: 11px; color: var(--accent-green);
 }
 
-/* Status Bar */
+/* Status */
 #status {
-  font-size: 14px; padding: 9px 18px;
-  background: rgba(45, 45, 85, 0.6); border-radius: 28px;
-  margin: 8px 0 12px; min-height: 38px;
+  font-size: 14px; padding: 9px 18px; background: rgba(45,45,85,0.6);
+  border-radius: 28px; margin: 8px 0 12px; min-height: 38px;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  border: 1px solid rgba(100, 150, 255, 0.25);
-  transition: all 0.2s ease;
+  border: 1px solid rgba(100,150,255,0.25);
 }
 #status.punch-active {
   background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(245,158,11,0.2));
-  border-color: rgba(239, 68, 68, 0.5);
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  border-color: rgba(239,68,68,0.5); box-shadow: 0 0 20px rgba(239,68,68,0.3);
 }
-.status-dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: #555; transition: all 0.3s ease;
-  box-shadow: 0 0 8px currentColor;
-}
-.status-dot.ready { background: var(--accent-green); color: var(--accent-green); }
-.status-dot.punching { background: var(--accent-red); color: var(--accent-red); animation: pulse 0.5s infinite; }
+.status-dot { width: 9px; height: 9px; border-radius: 50%; background: #555; transition: all 0.3s; }
+.status-dot.ready { background: var(--accent-green); }
+.status-dot.punching { background: var(--accent-red); animation: pulse 0.5s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-/* 🥊 BOXING GLOVE ANIMATION */
+/* Debug Message */
+.debug-msg {
+  font-size: 11px; padding: 6px 12px; margin: 6px 0 10px;
+  background: rgba(100,116,139,0.2); border-radius: 10px;
+  border-left: 3px solid var(--accent-blue); text-align: left;
+  display: none; animation: slideIn 0.2s ease;
+}
+.debug-msg.show { display: block; }
+.debug-msg.error { border-left-color: var(--accent-red); background: rgba(239,68,68,0.15); }
+.debug-msg.warn { border-left-color: var(--accent-orange); background: rgba(245,158,11,0.15); }
+
+/* Glove Animation */
 .glove-container {
   width: 160px; height: 160px; margin: 8px auto 14px;
   position: relative; display: flex; align-items: center; justify-content: center;
   perspective: 400px;
 }
-
 .glove {
-  position: relative;
-  width: 80px; height: 90px;
-  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform-origin: bottom center;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+  position: relative; width: 80px; height: 90px;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1);
+  transform-origin: bottom center; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
 }
-
-.glove-svg {
-  width: 100%; height: 100%;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-}
-
-.glove.punching {
-  animation: glovePunch 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
+.glove-svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+.glove.punching { animation: glovePunch 0.28s cubic-bezier(0.34,1.56,0.64,1); }
 @keyframes glovePunch {
-  0% { 
-    transform: translateZ(0) rotateX(0) scale(1); 
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
-  }
-  35% { 
-    transform: translateZ(40px) rotateX(-15deg) scale(1.12); 
-    filter: drop-shadow(0 25px 40px rgba(239,68,68,0.6));
-  }
-  55% { 
-    transform: translateZ(25px) rotateX(-8deg) scale(1.06); 
-    filter: drop-shadow(0 18px 30px rgba(239,68,68,0.5));
-  }
-  75% { 
-    transform: translateZ(8px) rotateX(-2deg) scale(1.02); 
-    filter: drop-shadow(0 12px 22px rgba(0,0,0,0.4));
-  }
-  100% { 
-    transform: translateZ(0) rotateX(0) scale(1); 
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
-  }
+  0%{transform:translateZ(0)rotateX(0)scale(1)}
+  35%{transform:translateZ(40px)rotateX(-15deg)scale(1.12)}
+  55%{transform:translateZ(25px)rotateX(-8deg)scale(1.06)}
+  100%{transform:translateZ(0)rotateX(0)scale(1)}
 }
-
-/* Impact Effects */
 .impact-ring {
-  position: absolute;
-  width: 120px; height: 120px;
-  border: 3px solid rgba(255,107,107,0);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
+  position: absolute; width: 120px; height: 120px;
+  border: 3px solid rgba(255,107,107,0); border-radius: 50%; opacity: 0;
 }
-.impact-ring.active {
-  animation: impactExpand 0.4s ease-out forwards;
-}
+.impact-ring.active { animation: impactExpand 0.4s ease-out forwards; }
 @keyframes impactExpand {
-  0% { 
-    border-color: rgba(255,107,107,0.8); 
-    transform: scale(0.3); 
-    opacity: 1; 
-  }
-  100% { 
-    border-color: rgba(255,107,107,0); 
-    transform: scale(2.2); 
-    opacity: 0; 
-  }
+  0%{border-color:rgba(255,107,107,0.8);transform:scale(0.3);opacity:1}
+  100%{border-color:rgba(255,107,107,0);transform:scale(2.2);opacity:0}
 }
-
 .impact-sparks {
-  position: absolute;
-  width: 200px; height: 200px;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  opacity: 0;
+  position: absolute; width: 200px; height: 200px;
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none; opacity: 0;
 }
 .impact-sparks.active { opacity: 1; }
-
 .spark {
-  position: absolute;
-  width: 8px; height: 8px;
-  background: radial-gradient(circle, #fff, #ff6b6b, #ef4444);
-  border-radius: 50%;
-  animation: sparkFly 0.5s ease-out forwards;
+  position: absolute; width: 8px; height: 8px;
+  background: radial-gradient(circle,#fff,#ff6b6b,#ef4444);
+  border-radius: 50%; animation: sparkFly 0.5s ease-out forwards;
 }
 @keyframes sparkFly {
-  0% { transform: translate(0,0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--tx), var(--ty)) scale(0.1); opacity: 0; }
+  0%{transform:translate(0,0)scale(1);opacity:1}
+  100%{transform:translate(var(--tx),var(--ty))scale(0.1);opacity:0}
 }
-
-/* Motion Trail */
 .glove-trail {
-  position: absolute;
-  width: 60px; height: 70px;
-  background: radial-gradient(ellipse, rgba(239,68,68,0.4) 0%, transparent 70%);
-  border-radius: 50%;
-  opacity: 0;
-  filter: blur(8px);
-  pointer-events: none;
+  position: absolute; width: 60px; height: 70px;
+  background: radial-gradient(ellipse,rgba(239,68,68,0.4) 0%,transparent 70%);
+  border-radius: 50%; opacity: 0; filter: blur(8px); pointer-events: none;
 }
-.glove-trail.active {
-  animation: trailFade 0.25s ease-out forwards;
-}
+.glove-trail.active { animation: trailFade 0.25s ease-out forwards; }
 @keyframes trailFade {
-  0% { opacity: 0.6; transform: translateZ(20px) scale(1); }
-  100% { opacity: 0; transform: translateZ(40px) scale(1.5); }
+  0%{opacity:0.6;transform:translateZ(20px)scale(1)}
+  100%{opacity:0;transform:translateZ(40px)scale(1.5)}
 }
 
-/* Stats Grid */
-.stats-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-  margin: 10px 0 14px;
-}
+/* Stats */
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 10px 0 14px; }
 .stat-card {
-  background: linear-gradient(145deg, rgba(35,35,70,0.6), rgba(25,25,55,0.5));
+  background: linear-gradient(145deg,rgba(35,35,70,0.6),rgba(25,25,55,0.5));
   padding: 10px 6px; border-radius: 14px; border: 1px solid rgba(100,150,255,0.2);
-  transition: transform 0.15s ease, border-color 0.2s;
 }
-.stat-card.active { 
-  border-color: var(--accent-orange); 
-  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
-  transform: translateY(-2px);
-}
-.stat-value {
-  font-size: 16px; font-weight: 700; color: var(--accent-blue);
-  display: block; margin-bottom: 2px; font-variant-numeric: tabular-nums;
-}
+.stat-card.active { border-color: var(--accent-orange); box-shadow: 0 0 15px rgba(245,158,11,0.3); }
+.stat-value { font-size: 16px; font-weight: 700; color: var(--accent-blue); display: block; margin-bottom: 2px; }
 .stat-label { font-size: 9px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
 .stat-unit { font-size: 8px; opacity: 0.4; margin-left: 2px; }
 
 /* Buttons */
 .btn-group { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 12px 0 16px; }
 button {
-  padding: 13px 20px; border: none; border-radius: 14px;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 95px; position: relative; overflow: hidden;
+  padding: 13px 20px; border: none; border-radius: 14px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.18s; min-width: 95px;
 }
-button::after {
-  content: ''; position: absolute; top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.4s;
-}
-button:active::after { left: 100%; }
 button:active { transform: scale(0.96); }
-
 .primary {
-  background: linear-gradient(135deg, var(--accent-green), #15803d);
-  color: white; box-shadow: 0 4px 20px rgba(34, 197, 94, 0.45);
+  background: linear-gradient(135deg,var(--accent-green),#15803d);
+  color: white; box-shadow: 0 4px 20px rgba(34,197,94,0.45);
 }
-.primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
-.primary:hover:not(:disabled) { box-shadow: 0 6px 28px rgba(34, 197, 94, 0.6); }
-
+.primary:disabled { opacity: 0.55; cursor: not-allowed; }
 .secondary {
-  background: linear-gradient(135deg, rgba(100,116,139,0.25), rgba(70,85,110,0.2));
+  background: linear-gradient(135deg,rgba(100,116,139,0.25),rgba(70,85,110,0.2));
   color: white; border: 1px solid rgba(100,116,139,0.45);
 }
-.secondary:hover { border-color: rgba(100,150,255,0.7); background: rgba(100,116,139,0.35); }
-
-.danger { background: linear-gradient(135deg, var(--accent-red), #b91c1c); color: white; }
+.danger { background: linear-gradient(135deg,var(--accent-red),#b91c1c); color: white; }
 
 /* History */
-.history { margin-top: 12px; width: 100%; animation: fadeInUp 0.4s ease 0.1s both; }
-@keyframes fadeInUp { from { opacity:0; transform:translateY(15px) } to { opacity:1; transform:translateY(0) } }
-
-.history h3 {
-  font-size: 12px; opacity: 0.7; margin: 0 0 9px 0;
-  text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600;
-  display: flex; align-items: center; gap: 6px;
-}
-.history-list {
-  display: flex; gap: 7px; overflow-x: auto; padding: 4px 2px;
-  scrollbar-width: none; scroll-behavior: smooth;
-}
+.history { margin-top: 12px; width: 100%; }
+.history h3 { font-size: 12px; opacity: 0.7; margin: 0 0 9px 0; text-transform: uppercase; }
+.history-list { display: flex; gap: 7px; overflow-x: auto; padding: 4px 2px; scrollbar-width: none; }
 .history-list::-webkit-scrollbar { display: none; }
 .history-item {
-  flex: 0 0 auto; padding: 10px 14px;
-  background: linear-gradient(145deg, rgba(45,45,85,0.5), rgba(35,35,70,0.4));
+  flex: 0 0 auto; padding: 10px 14px; background: rgba(45,45,85,0.4);
   border-radius: 12px; text-align: center; min-width: 68px;
-  border: 1px solid rgba(100,150,255,0.15);
-  transition: transform 0.15s ease, border-color 0.2s;
 }
-.history-item:active { transform: scale(0.98); }
-.history-item.best {
-  border: 2px solid var(--accent-orange);
-  background: linear-gradient(145deg, rgba(245,158,11,0.15), rgba(245,158,11,0.08));
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
-}
+.history-item.best { border: 2px solid var(--accent-orange); background: rgba(245,158,11,0.15); }
 .history-score { font-size: 19px; font-weight: 800; color: var(--accent-blue); }
 .history-time { font-size: 9px; opacity: 0.5; margin-top: 3px; }
-.history-best-badge {
-  display: block; font-size: 8px; color: var(--accent-orange);
-  margin-top: 2px; font-weight: 600;
-}
 
 /* Instructions */
 .instructions {
-  margin-top: 14px; padding: 12px 15px;
-  background: linear-gradient(145deg, rgba(40,50,80,0.35), rgba(30,40,70,0.25));
+  margin-top: 14px; padding: 12px 15px; background: rgba(40,50,80,0.25);
   border-radius: 14px; font-size: 12px; line-height: 1.5; text-align: left;
-  border: 1px solid rgba(100,150,255,0.15);
-  animation: fadeInUp 0.4s ease 0.2s both;
 }
 .instructions strong { color: var(--accent-blue); }
 .instructions ol { margin: 8px 0 0 20px; padding: 0; }
-.instructions li { margin: 4px 0; opacity: 0.9; }
-.instructions li::marker { color: var(--accent-green); }
-.instructions .grip-tip {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(100,150,255,0.15); padding: 3px 8px;
-  border-radius: 6px; font-size: 11px; margin-top: 5px;
-}
+.instructions li { margin: 4px 0; }
 
-/* Modal */
+/* Modal & Calibration */
 .modal {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(5, 5, 20, 0.92); backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1000; padding: 20px; animation: modalFade 0.25s ease;
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: rgba(5,5,20,0.92); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
 }
-@keyframes modalFade { from { opacity: 0 } to { opacity: 1 } }
 .modal.hidden { display: none; }
-
 .modal-content {
-  background: linear-gradient(145deg, #1e1e45, #2a2a5a);
-  padding: 24px; border-radius: 20px; max-width: 340px;
-  text-align: center; border: 1px solid rgba(100,150,255,0.35);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(100, 150, 255, 0.2);
-  animation: modalSlide 0.3s ease;
+  background: linear-gradient(145deg,#1e1e45,#2a2a5a); padding: 24px;
+  border-radius: 20px; max-width: 340px; text-align: center;
+  border: 1px solid rgba(100,150,255,0.35);
 }
-@keyframes modalSlide { from { transform: translateY(20px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
-
-.modal h3 { margin: 0 0 14px 0; font-size: 20px; font-weight: 700; }
-.modal p { opacity: 0.85; font-size: 14px; margin: 0 0 18px 0; line-height: 1.5; }
+.modal h3 { margin: 0 0 14px 0; }
+.modal p { opacity: 0.85; font-size: 14px; margin: 0 0 18px 0; }
 .modal p small { display: block; margin-top: 8px; opacity: 0.6; font-size: 12px; }
 .modal-buttons { display: flex; gap: 10px; justify-content: center; }
 
-/* Calibration */
 .calibration-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(26,26,58,0.98) 0%, rgba(10,10,30,0.99) 100%);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  z-index: 600; padding: 25px; animation: fadeIn 0.2s ease;
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: rgba(10,10,30,0.98); display: flex;
+  flex-direction: column; align-items: center; justify-content: center;
+  z-index: 600; padding: 25px;
 }
 .calibration-overlay.hidden { display: none; }
-@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-
-.calibration-icon {
-  font-size: 48px; margin-bottom: 16px; animation: bounce 1s infinite;
-}
+.calibration-icon { font-size: 48px; margin-bottom: 16px; animation: bounce 1s infinite; }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-
 .calibration-progress {
-  width: 180px; height: 180px;
-  border: 4px solid rgba(100,150,255,0.25); border-top-color: var(--accent-blue);
-  border-radius: 50%; animation: spin 0.9s linear infinite; margin: 16px 0;
+  width: 180px; height: 180px; border: 4px solid rgba(100,150,255,0.25);
+  border-top-color: var(--accent-blue); border-radius: 50%;
+  animation: spin 0.9s linear infinite; margin: 16px 0;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.calibration-grip {
-  display: flex; align-items: center; gap: 10px;
-  background: rgba(100,150,255,0.15); padding: 10px 16px;
-  border-radius: 12px; margin: 12px 0; font-size: 13px;
-}
-.calibration-grip svg { width: 32px; height: 32px; flex-shrink: 0; }
-
 /* Responsive */
-@media (max-height: 700px) {
+@media (max-height:700px) {
   .score-container { margin: 6px 0 10px; padding: 14px 16px; }
   #score { font-size: 58px; }
-  .glove-container { width: 130px; height: 130px; margin: 6px auto 10px; }
+  .glove-container { width: 130px; height: 130px; }
   .glove { width: 65px; height: 72px; }
-  .stats-grid { gap: 6px; }
-  .stat-value { font-size: 14px; }
 }
-@media (max-width: 360px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .btn-group { gap: 7px; }
+@media (max-width:360px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
   button { min-width: 85px; padding: 11px 16px; font-size: 13px; }
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 </style>
 </head>
@@ -444,7 +261,7 @@ button:active { transform: scale(0.96); }
   </header>
 
   <div class="https-warning" id="httpsWarning">
-    ⚠️ Sensörler için <strong>HTTPS</strong> gereklidir. Localhost veya yayınlanmış site kullanın.
+    ⚠️ Sensörler için <strong>HTTPS</strong> gereklidir.
   </div>
 
   <div class="score-container">
@@ -458,41 +275,26 @@ button:active { transform: scale(0.96); }
     <span id="statusText">📱 Başlat'a basarak başla</span>
   </div>
 
-  <!-- 🥊 Boxing Glove Animation -->
+  <!-- Debug Message Area -->
+  <div class="debug-msg" id="debugMsg"></div>
+
+  <!-- Glove Animation -->
   <div class="glove-container">
     <div class="glove" id="glove">
       <svg class="glove-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Glove body -->
         <defs>
           <linearGradient id="gloveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#ff6b6b"/>
             <stop offset="50%" style="stop-color:#ef4444"/>
             <stop offset="100%" style="stop-color:#b91c1c"/>
           </linearGradient>
-          <filter id="gloveShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.3"/>
-          </filter>
+          <filter id="gloveShadow"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.3"/></filter>
         </defs>
-        
-        <!-- Wrist strap -->
         <rect x="35" y="95" width="30" height="20" rx="4" fill="#374151" stroke="#1f2937" stroke-width="2"/>
-        <rect x="40" y="100" width="20" height="3" rx="1" fill="#6b7280"/>
-        
-        <!-- Glove main -->
         <ellipse cx="50" cy="55" rx="38" ry="42" fill="url(#gloveGrad)" filter="url(#gloveShadow)" stroke="#991b1b" stroke-width="2"/>
-        
-        <!-- Fingers/bulge -->
         <ellipse cx="50" cy="35" rx="32" ry="28" fill="url(#gloveGrad)" stroke="#991b1b" stroke-width="1.5"/>
-        
-        <!-- Thumb -->
         <ellipse cx="22" cy="62" rx="14" ry="18" fill="url(#gloveGrad)" stroke="#991b1b" stroke-width="1.5"/>
-        
-        <!-- Highlight -->
         <ellipse cx="42" cy="45" rx="12" ry="16" fill="rgba(255,255,255,0.15)" transform="rotate(-20 42 45)"/>
-        
-        <!-- Stitching lines -->
-        <path d="M 35 55 Q 50 45 65 55" stroke="#991b1b" stroke-width="1.5" fill="none" opacity="0.6"/>
-        <path d="M 38 65 Q 50 58 62 65" stroke="#991b1b" stroke-width="1" fill="none" opacity="0.4"/>
       </svg>
     </div>
     <div class="impact-ring" id="impactRing"></div>
@@ -500,15 +302,15 @@ button:active { transform: scale(0.96); }
     <div class="glove-trail" id="gloveTrail"></div>
   </div>
 
-  <!-- Stats: Grip-based detection -->
+  <!-- Stats -->
   <div class="stats-grid">
     <div class="stat-card" id="statPunch">
       <span class="stat-value" id="valPunch">0.0</span>
-      <span class="stat-label">Vuruş Yönü<span class="stat-unit">m/s²</span></span>
+      <span class="stat-label">Vuruş<span class="stat-unit">m/s²</span></span>
     </div>
     <div class="stat-card" id="statJerk">
       <span class="stat-value" id="valJerk">0</span>
-      <span class="stat-label">Ani Değişim<span class="stat-unit">m/s³</span></span>
+      <span class="stat-label">Jerk<span class="stat-unit">m/s³</span></span>
     </div>
     <div class="stat-card" id="statGyro">
       <span class="stat-value" id="valGyro">0</span>
@@ -522,7 +324,7 @@ button:active { transform: scale(0.96); }
 
   <div class="btn-group">
     <button class="primary" id="startBtn">🚀 Başlat</button>
-    <button class="secondary" id="calibrateBtn">🤚 Kalibre Et</button>
+    <button class="secondary" id="calibrateBtn">🤚 Kalibre</button>
     <button class="secondary" id="testBtn">🧪 Test</button>
     <button class="danger" id="resetBtn">♻️ Reset</button>
   </div>
@@ -535,555 +337,413 @@ button:active { transform: scale(0.96); }
   <div class="instructions">
     <strong>Nasıl Kullanılır:</strong>
     <ol>
-      <li>🚀 "Başlat" → İzin ver (HTTPS şart)</li>
-      <li>🤚 "Kalibre Et" → Telefonu <strong>yumruk şeklinde</strong> tut (ekran aşağı, el kavrıyor)</li>
-      <li>👊 Sadece <strong>ileri doğru</strong> sertçe yumruk at</li>
-      <li>🔄 Telefonu çevirmek skor saymaz - sadece gerçek vuruşlar!</li>
+      <li>🚀 "Başlat" → İzin ver</li>
+      <li>🤚 "Kalibre" → Telefonu yumruk şeklinde tut (ekran aşağı)</li>
+      <li>👊 Sadece ileri doğru sertçe yumruk at</li>
+      <li>💡 1000+ puan için orta güç, 9000+ için maksimum güç gerekir</li>
     </ol>
-    <div class="grip-tip">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M7 11.5V14M7 14C5.89543 14 5 14.8954 5 16V19C5 20.1046 5.89543 21 7 21H9C10.1046 21 11 20.1046 11 19V14M7 14C7 12.8954 7.89543 12 9 12H11C12.1046 12 13 12.8954 13 14V19C13 20.1046 12.1046 21 11 21H9M13 14C14.1046 14 15 14.8954 15 16V19C15 20.1046 14.1046 21 13 21H11M15 14C15 12.8954 15.8954 12 17 12H18C19.1046 12 20 12.8954 20 14V19C20 20.1046 19.1046 21 18 21H17"/>
-      </svg>
-      Telefonu elinde sıkıca kavra, ekran yere baksın
-    </div>
   </div>
 </div>
 
 <!-- Permission Modal -->
 <div class="modal" id="permissionModal">
   <div class="modal-content">
-    <h3>🔐 Sensör Erişimi</h3>
-    <p>Punch Machine Pro'nun çalışması için ivmeölçer ve jiroskop verilerine ihtiyaç var.</p>
-    <p><small>📌 Chrome Android: Sadece HTTPS veya localhost'ta çalışır</small></p>
+    <h3>🔐 Sensör İzni</h3>
+    <p>Punch Machine'in çalışması için ivmeölçer erişimi gerekiyor.</p>
+    <p><small>📌 Chrome Android: Sadece HTTPS/localhost'ta çalışır</small></p>
     <div class="modal-buttons">
-      <button class="primary" id="grantPermission">✅ İzin Ver & Başla</button>
-      <button class="secondary" id="denyPermission">❌ Sonra</button>
+      <button class="primary" id="grantPermission">✅ İzin Ver</button>
+      <button class="secondary" id="denyPermission">❌ İptal</button>
     </div>
   </div>
 </div>
 
-<!-- Calibration Overlay -->
+<!-- Calibration -->
 <div class="calibration-overlay hidden" id="calibrationOverlay">
   <div class="calibration-icon">🤚</div>
-  <h3 style="margin:0 0 8px 0">Yumruk Pozisyonunda Kalibre Et</h3>
-  <p style="opacity:0.8;margin:0 0 8px 0">Telefonu elinde sıkıca kavra:</p>
-  
-  <div class="calibration-grip">
-    <svg viewBox="0 0 100 80" fill="none" stroke="#60a5fa" stroke-width="2">
-      <!-- Phone outline -->
-      <rect x="25" y="10" width="50" height="60" rx="4" fill="rgba(96,165,250,0.1)" stroke="#60a5fa"/>
-      <!-- Screen -->
-      <rect x="30" y="15" width="40" height="45" rx="2" fill="rgba(96,165,250,0.2)"/>
-      <!-- Hand grip indication -->
-      <path d="M15 35 Q10 45 15 55" stroke="#22c55e" stroke-width="2.5" fill="none"/>
-      <path d="M85 35 Q90 45 85 55" stroke="#22c55e" stroke-width="2.5" fill="none"/>
-      <!-- Arrow showing punch direction -->
-      <path d="M50 75 L50 85 M45 80 L50 85 L55 80" stroke="#f59e0b" stroke-width="2" fill="none"/>
-    </svg>
-    <div style="text-align:left">
-      <strong>Ekran aşağı</strong><br>
-      <small style="opacity:0.7">Telefonu yumruk gibi sıkı tut</small>
-    </div>
-  </div>
-  
+  <h3 style="margin:0 0 8px 0">Yumruk Pozisyonunda Tut</h3>
+  <p style="opacity:0.8;margin:0 0 16px 0">Telefonu elinde sıkıca kavra, ekran aşağı baksın...</p>
   <div class="calibration-progress"></div>
-  <p id="calibrationProgress" style="font-size:14px;font-weight:500">3 saniye kaldı</p>
+  <p id="calibrationProgress">3 saniye kaldı</p>
   <button class="secondary" id="cancelCalibration" style="margin-top:12px">İptal</button>
 </div>
 
 <script>
-// ====== PRO CONFIG - Grip-Based Punch Detection ======
+// ====== FIXED CONFIG - Forgiving Validation ======
 const CONFIG = {
-  // Grip calibration: detect punch axis when phone is held in fist (screen down)
-  GRAVITY_MAGNITUDE: 9.8,           // Earth gravity in m/s²
-  GRAVITY_TOLERANCE: 1.5,           // Tolerance for detecting gravity direction
-  PUNCH_AXIS_THRESHOLD: 7.0,        // Min acceleration in punch direction to trigger
+  // Detection thresholds - MUCH MORE FORGIVING
+  PUNCH_AXIS_THRESHOLD: 4.0,    // Was 7.0 - now detects weaker punches
+  MIN_JERK: 8,                   // Was 15 - lower = easier to trigger
+  MIN_IMPULSE: 0.15,             // Was 0.4 - much more forgiving
+  MIN_SAMPLES: 3,                // Was 4 - accept shorter punch windows
   
-  // Rotation filtering: ignore pure rotations
-  GYRO_ROTATION_THRESHOLD: 2.5,     // rad/s - above this = likely rotation, not punch
-  GYRO_PUNCH_RATIO: 0.4,            // max gyro/accel ratio for valid punch
+  // Rotation filtering - LESS AGGRESSIVE
+  GYRO_ROTATION_THRESHOLD: 4.0,  // Was 2.5 - allow more rotation
+  GYRO_PUNCH_RATIO: 0.7,         // Was 0.4 - less strict ratio
   
-  // Punch detection parameters
-  MIN_JERK: 15,                      // Minimum jerk for valid punch
-  MIN_IMPULSE: 0.4,                  // Minimum impulse area
-  PUNCH_WINDOW: 160,                 // ms capture window (shorter = more precise)
-  COOLDOWN: 450,                     // ms between punches
+  // Scoring - LINEAR for low-mid, EXPONENTIAL for high end
+  SCORE_PUNCH_WEIGHT: 45,        // Direct multiplier for punch accel
+  SCORE_JERK_WEIGHT: 8,          // Direct multiplier for jerk
+  SCORE_IMPULSE_WEIGHT: 150,     // Direct multiplier for impulse
+  SCORE_SOFT_CAP: 3000,          // Linear up to this point
+  SCORE_HARD_CAP: 9999,          // Absolute maximum
+  SCORE_EXPONENT_HIGH: 1.4,      // Exponential growth above soft cap
   
-  // Adaptive thresholds
-  BASE_THRESHOLD_MULTIPLIER: 2.5,
-  MIN_ABSOLUTE_THRESHOLD: 6,
-  MAX_ABSOLUTE_THRESHOLD: 30,
-  
-  // Scoring
-  SCORE_PUNCH_WEIGHT: 0.65,
-  SCORE_JERK_WEIGHT: 0.25,
-  SCORE_IMPULSE_WEIGHT: 0.10,
-  SCORE_SCALE: 9999,
-  SCORE_EXPONENT: 2.0,
-  SCORE_DECAY: 20,
+  // Timing
+  PUNCH_WINDOW: 180,             // ms capture window
+  COOLDOWN: 400,                 // ms between punches
+  CALIBRATION_DURATION: 2500,
   
   // Filtering
-  SMOOTHING_FACTOR: 0.20,
-  MIN_SAMPLES: 4,
+  SMOOTHING_FACTOR: 0.25,
   
-  // Haptics - Stronger feedback
-  VIBRATE_BASE: [25, 15, 55, 15, 100],
-  VIBRATE_INTENSITY_SCALE: 0.28,
+  // Haptics
+  VIBRATE_BASE: [20, 12, 40, 12, 70],
+  VIBRATE_INTENSITY_SCALE: 0.22,
   
   // UI
-  DEBUG_UPDATE_MS: 40,
+  DEBUG_UPDATE_MS: 50,
   MAX_HISTORY: 12,
-  
-  // Calibration
-  CALIBRATION_DURATION: 2800,
-  CALIBRATION_MIN_SAMPLES: 45
+  CALIBRATION_MIN_SAMPLES: 40
 };
 
 // ====== STATE ======
 const state = {
-  // Grip-based calibration
-  punchAxis: null,           // 'x', 'y', or 'z' - the axis pointing forward when punching
-  punchDirection: 1,         // +1 or -1 - direction of forward punch on that axis
-  baseline: { x: 0, y: 0, z: 0 },
-  punchThreshold: 10,        // Adaptive threshold for punch detection
-  calibrated: false,
-  
-  // Runtime
-  mode: 'idle',
-  windowData: [],
-  windowStart: 0,
-  
-  lastTime: 0,
-  lastPunchAccel: 0,
-  smoothedPunch: 0,
-  
-  metrics: { punch: 0, jerk: 0, impulse: 0, gyro: 0 },
-  
-  history: [],
-  bestScore: 0,
-  
-  sensorsReady: false,
-  permissionGranted: false,
-  
+  punchAxis: null, punchDirection: 1,
+  baseline: {x:0,y:0,z:0}, punchThreshold: 8,
+  calibrated: false, mode: 'idle',
+  windowData: [], windowStart: 0,
+  lastTime: 0, lastPunchAccel: 0, smoothedPunch: 0,
+  metrics: {punch:0,jerk:0,impulse:0,gyro:0},
+  history: [], bestScore: 0,
+  sensorsReady: false, permissionGranted: false,
   lastStatsUpdate: 0
 };
 
-// ====== DOM ELEMENTS ======
+// ====== DOM ======
 const els = {
   score: document.getElementById('score'),
   statusText: document.getElementById('statusText'),
   statusDot: document.getElementById('statusDot'),
   status: document.getElementById('status'),
+  debugMsg: document.getElementById('debugMsg'),
   glove: document.getElementById('glove'),
   impactRing: document.getElementById('impactRing'),
   impactSparks: document.getElementById('impactSparks'),
   gloveTrail: document.getElementById('gloveTrail'),
   calibrationBadge: document.getElementById('calibrationBadge'),
   bestBadge: document.getElementById('bestBadge'),
-  
-  // Stats
-  valPunch: document.getElementById('valPunch'),
-  valJerk: document.getElementById('valJerk'),
-  valGyro: document.getElementById('valGyro'),
-  valValid: document.getElementById('valValid'),
-  statPunch: document.getElementById('statPunch'),
-  statJerk: document.getElementById('statJerk'),
-  statGyro: document.getElementById('statGyro'),
-  statValid: document.getElementById('statValid'),
-  
-  startBtn: document.getElementById('startBtn'),
-  calibrateBtn: document.getElementById('calibrateBtn'),
-  testBtn: document.getElementById('testBtn'),
-  resetBtn: document.getElementById('resetBtn'),
+  valPunch: document.getElementById('valPunch'), valJerk: document.getElementById('valJerk'),
+  valGyro: document.getElementById('valGyro'), valValid: document.getElementById('valValid'),
+  statPunch: document.getElementById('statPunch'), statJerk: document.getElementById('statJerk'),
+  statGyro: document.getElementById('statGyro'), statValid: document.getElementById('statValid'),
+  startBtn: document.getElementById('startBtn'), calibrateBtn: document.getElementById('calibrateBtn'),
+  testBtn: document.getElementById('testBtn'), resetBtn: document.getElementById('resetBtn'),
   historyList: document.getElementById('historyList'),
-  
   permissionModal: document.getElementById('permissionModal'),
   calibrationOverlay: document.getElementById('calibrationOverlay'),
   calibrationProgress: document.getElementById('calibrationProgress'),
   httpsWarning: document.getElementById('httpsWarning')
 };
 
-// ====== UTILITIES ======
+// ====== UTILS ======
 const now = () => Date.now();
-const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-const lerp = (a, b, t) => a + (b - a) * t;
-const fmt = v => Math.floor(clamp(v, 0, CONFIG.SCORE_SCALE)).toString().padStart(4, '0');
+const clamp = (v,min,max) => Math.max(min, Math.min(max, v));
+const lerp = (a,b,t) => a + (b-a)*t;
+const fmt = v => Math.floor(clamp(v,0,CONFIG.SCORE_HARD_CAP)).toString().padStart(4,'0');
 const sign = v => v >= 0 ? 1 : -1;
 
-function updateStatus(text, isPunching = false) {
+function showDebug(msg, type='info') {
+  els.debugMsg.textContent = msg;
+  els.debugMsg.className = 'debug-msg show' + (type === 'error' ? ' error' : type === 'warn' ? ' warn' : '');
+  setTimeout(() => els.debugMsg.classList.remove('show'), 2500);
+}
+
+function updateStatus(text, isPunching=false) {
   els.statusText.textContent = text;
   els.statusDot.className = 'status-dot ' + (isPunching ? 'punching' : 'ready');
-  els.status.classList.toggle('punch-active', isPunching);
 }
 
 function updateCalibrationBadge() {
   if (!state.calibrated) {
-    els.calibrationBadge.textContent = '⚙️ Yumruk Pozisyonunda Kalibre Et';
+    els.calibrationBadge.textContent = '⚙️ Kalibrasyon Yapın';
     els.calibrationBadge.style.background = 'rgba(245,158,11,0.15)';
-    els.calibrationBadge.style.borderColor = 'rgba(245,158,11,0.4)';
     els.calibrationBadge.style.color = '#fbbf24';
   } else {
     const dir = state.punchDirection > 0 ? '+' : '-';
-    els.calibrationBadge.textContent = `✅ Kalibre: ${state.punchAxis.toUpperCase()}${dir} eksen`;
+    els.calibrationBadge.textContent = `✅ Kalibre: ${state.punchAxis.toUpperCase()}${dir}`;
     els.calibrationBadge.style.background = 'rgba(34,197,94,0.15)';
-    els.calibrationBadge.style.borderColor = 'rgba(34,197,94,0.4)';
     els.calibrationBadge.style.color = '#22c55e';
   }
 }
 
-// ====== STATS DISPLAY ======
-function updateStats(punchAccel, jerk, gyroMag, isValid) {
+function updateStats(punch, jerk, gyro, valid) {
   const t = now();
   if (t - state.lastStatsUpdate < CONFIG.DEBUG_UPDATE_MS) return;
   state.lastStatsUpdate = t;
-  
-  els.valPunch.textContent = punchAccel.toFixed(1);
+  els.valPunch.textContent = punch.toFixed(1);
   els.valJerk.textContent = Math.floor(jerk);
-  els.valGyro.textContent = gyroMag.toFixed(1);
-  els.valValid.textContent = isValid ? '✅' : '❌';
-  
-  // Highlight active stats
-  els.statPunch.classList.toggle('active', Math.abs(punchAccel) > 5);
-  els.statJerk.classList.toggle('active', jerk > 20);
-  els.statGyro.classList.toggle('active', gyroMag > 2);
-  els.statValid.classList.toggle('active', isValid);
+  els.valGyro.textContent = gyro.toFixed(1);
+  els.valValid.textContent = valid ? '✅' : '❌';
+  els.statPunch.classList.toggle('active', Math.abs(punch) > 3);
+  els.statJerk.classList.toggle('active', jerk > 10);
 }
 
-// ====== GLOVE ANIMATION & EFFECTS ======
-function triggerGlovePunch() {
-  // Glove punch animation
+// ====== EFFECTS ======
+function triggerEffects() {
   els.glove.classList.add('punching');
   setTimeout(() => els.glove.classList.remove('punching'), 300);
-  
-  // Impact ring
   els.impactRing.classList.add('active');
   setTimeout(() => els.impactRing.classList.remove('active'), 420);
-  
-  // Motion trail
   els.gloveTrail.classList.add('active');
   setTimeout(() => els.gloveTrail.classList.remove('active'), 260);
-  
-  // Spark particles
-  createSparks();
-}
-
-function createSparks() {
+  // Sparks
   els.impactSparks.innerHTML = '';
   els.impactSparks.classList.add('active');
-  
-  for (let i = 0; i < 12; i++) {
-    const spark = document.createElement('div');
-    spark.className = 'spark';
-    const angle = (i / 12) * Math.PI * 2 + Math.random() * 0.5;
-    const dist = 50 + Math.random() * 50;
-    spark.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
-    spark.style.setProperty('--ty', `${Math.sin(angle) * dist}px`);
-    spark.style.animationDelay = `${Math.random() * 0.08}s`;
-    spark.style.animationDuration = `${0.4 + Math.random() * 0.2}s`;
-    els.impactSparks.appendChild(spark);
+  for (let i=0; i<12; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const a = (i/12)*Math.PI*2, d = 50 + Math.random()*50;
+    s.style.setProperty('--tx', `${Math.cos(a)*d}px`);
+    s.style.setProperty('--ty', `${Math.sin(a)*d}px`);
+    els.impactSparks.appendChild(s);
   }
-  
   setTimeout(() => els.impactSparks.classList.remove('active'), 550);
 }
 
-// ====== GRIP-BASED CALIBRATION ======
+// ====== CALIBRATION ======
 function calibrate() {
-  if (!state.sensorsReady) {
-    updateStatus('⚠️ Önce sensörleri başlat');
-    return;
-  }
-  
+  if (!state.sensorsReady) { showDebug('⚠️ Önce başlat', 'warn'); return; }
   els.calibrationOverlay.classList.remove('hidden');
-  updateStatus('🤚 Yumruk pozisyonunda tut...', false);
-  
-  const samples = { x: [], y: [], z: [], gyro: [] };
-  const start = now();
+  updateStatus('🤚 Kalibrasyon...');
+  const samples = {x:[],y:[],z:[]}, start = now();
   
   function collect(e) {
     const acc = e.accelerationIncludingGravity;
-    const gyro = e.rotationRate;
-    
-    if (acc) {
-      samples.x.push(acc.x);
-      samples.y.push(acc.y);
-      samples.z.push(acc.z);
-    }
-    if (gyro) {
-      samples.gyro.push({
-        x: gyro.x, y: gyro.y, z: gyro.z,
-        mag: Math.sqrt(gyro.x*gyro.x + gyro.y*gyro.y + gyro.z*gyro.z)
-      });
-    }
-    
+    if (acc) { samples.x.push(acc.x); samples.y.push(acc.y); samples.z.push(acc.z); }
     const elapsed = now() - start;
-    const remaining = Math.max(0, Math.ceil((CONFIG.CALIBRATION_DURATION - elapsed) / 1000));
-    els.calibrationProgress.textContent = remaining > 0 ? `${remaining} saniye kaldı` : 'Analiz ediliyor...';
-    
+    const rem = Math.max(0, Math.ceil((CONFIG.CALIBRATION_DURATION - elapsed)/1000));
+    els.calibrationProgress.textContent = rem > 0 ? `${rem}s kaldı` : 'Analiz...';
     if (elapsed >= CONFIG.CALIBRATION_DURATION) {
       window.removeEventListener('devicemotion', collect);
-      analyzeGripCalibration(samples);
+      analyzeCalibration(samples);
     }
   }
-  
-  window.addEventListener('devicemotion', collect, { passive: true });
+  window.addEventListener('devicemotion', collect, {passive:true});
 }
 
-function analyzeGripCalibration(samples) {
+function analyzeCalibration(samples) {
   els.calibrationOverlay.classList.add('hidden');
-  
   if (samples.x.length < CONFIG.CALIBRATION_MIN_SAMPLES) {
-    updateStatus('❌ Yetersiz veri - Tekrar dene');
-    return;
+    showDebug('❌ Yetersiz veri', 'error'); return;
   }
-  
-  // Calculate mean acceleration (includes gravity)
   const mean = {
-    x: samples.x.reduce((a,b)=>a+b,0) / samples.x.length,
-    y: samples.y.reduce((a,b)=>a+b,0) / samples.y.length,
-    z: samples.z.reduce((a,b)=>a+b,0) / samples.z.length
+    x: samples.x.reduce((a,b)=>a+b)/samples.x.length,
+    y: samples.y.reduce((a,b)=>a+b)/samples.y.length,
+    z: samples.z.reduce((a,b)=>a+b)/samples.z.length
   };
-  
-  // When phone is held in fist grip (screen down), gravity points "forward" in punch direction
-  // Find which axis has magnitude closest to gravity (9.8 m/s²)
-  const axes = ['x', 'y', 'z'];
-  let bestAxis = 'z';
-  let bestDiff = Infinity;
-  
-  axes.forEach(axis => {
-    const diff = Math.abs(Math.abs(mean[axis]) - CONFIG.GRAVITY_MAGNITUDE);
-    if (diff < bestDiff) {
-      bestDiff = diff;
-      bestAxis = axis;
-    }
+  // Find axis closest to gravity (9.8 m/s²)
+  let bestAxis='z', bestDiff=Infinity;
+  ['x','y','z'].forEach(ax => {
+    const diff = Math.abs(Math.abs(mean[ax]) - 9.8);
+    if (diff < bestDiff) { bestDiff = diff; bestAxis = ax; }
   });
+  if (bestDiff > 2.0) { showDebug('❌ Telefonu yumruk şeklinde tut!', 'error'); return; }
   
-  // Validate: must be within tolerance of gravity
-  if (bestDiff > CONFIG.GRAVITY_TOLERANCE) {
-    updateStatus('❌ Telefonu yumruk şeklinde tut!');
-    return;
-  }
-  
-  // Determine punch direction: positive or negative on that axis
-  // When punching forward, acceleration goes OPPOSITE to gravity (you push against gravity direction)
   state.punchAxis = bestAxis;
-  state.punchDirection = -sign(mean[bestAxis]); // Punch forward = opposite of gravity
+  state.punchDirection = -sign(mean[bestAxis]);
+  state.baseline = {...mean};
   
-  // Calculate baseline (remove gravity for dynamic motion detection)
-  state.baseline = { 
-    x: mean.x, y: mean.y, z: mean.z 
-  };
-  
-  // Calculate noise level for adaptive threshold
+  // Noise-based threshold (more forgiving)
   const std = {
-    x: Math.sqrt(samples.x.reduce((sum,v)=>sum+Math.pow(v-mean.x,2),0)/samples.x.length),
-    y: Math.sqrt(samples.y.reduce((sum,v)=>sum+Math.pow(v-mean.y,2),0)/samples.y.length),
-    z: Math.sqrt(samples.z.reduce((sum,v)=>sum+Math.pow(v-mean.z,2),0)/samples.z.length)
+    x: Math.sqrt(samples.x.reduce((s,v)=>s+Math.pow(v-mean.x,2),0)/samples.x.length),
+    y: Math.sqrt(samples.y.reduce((s,v)=>s+Math.pow(v-mean.y,2),0)/samples.y.length),
+    z: Math.sqrt(samples.z.reduce((s,v)=>s+Math.pow(v-mean.z,2),0)/samples.z.length)
   };
-  
-  // Adaptive punch threshold
-  state.punchThreshold = clamp(
-    std[state.punchAxis] * CONFIG.BASE_THRESHOLD_MULTIPLIER,
-    CONFIG.MIN_ABSOLUTE_THRESHOLD,
-    CONFIG.MAX_ABSOLUTE_THRESHOLD
-  );
-  
+  state.punchThreshold = clamp(std[state.punchAxis] * 2.2, 4, 20);
   state.calibrated = true;
   
-  // Save calibration
   localStorage.setItem('punchPro_cal', JSON.stringify({
-    punchAxis: state.punchAxis,
-    punchDirection: state.punchDirection,
-    baseline: state.baseline,
-    punchThreshold: state.punchThreshold
+    punchAxis: state.punchAxis, punchDirection: state.punchDirection,
+    baseline: state.baseline, punchThreshold: state.punchThreshold
   }));
   
-  // Update UI
   updateCalibrationBadge();
   const dir = state.punchDirection > 0 ? '+' : '-';
-  updateStatus(`✅ Kalibre: ${state.punchAxis.toUpperCase()}${dir} • Hazır!`);
+  updateStatus(`✅ Hazır! ${state.punchAxis.toUpperCase()}${dir} eksen`);
+  showDebug('✅ Kalibrasyon tamam! Şimdi vurabilirsin.');
 }
 
-// ====== SENSOR HANDLING - GRIP-BASED PUNCH DETECTION ======
+// ====== SENSOR HANDLING ======
 function handleMotion(e) {
   if (!state.sensorsReady || !state.calibrated) return;
   if (state.mode === 'processing' || state.mode === 'cooldown') return;
   
-  const t = now();
-  const dt = Math.max(0.004, (t - state.lastTime) / 1000);
+  const t = now(), dt = Math.max(0.004, (t-state.lastTime)/1000);
   state.lastTime = t;
-  
-  const acc = e.accelerationIncludingGravity;
-  const gyro = e.rotationRate;
-  
+  const acc = e.accelerationIncludingGravity, gyro = e.rotationRate;
   if (!acc || acc.x === null) return;
   
-  // Remove baseline (gravity in grip position)
-  const dynamic = {
-    x: acc.x - state.baseline.x,
-    y: acc.y - state.baseline.y,
-    z: acc.z - state.baseline.z
-  };
+  // Remove baseline
+  const dyn = { x: acc.x-state.baseline.x, y: acc.y-state.baseline.y, z: acc.z-state.baseline.z };
+  const punchAccel = dyn[state.punchAxis] * state.punchDirection;
   
-  // Get acceleration in calibrated punch direction
-  const punchAccel = dynamic[state.punchAxis] * state.punchDirection;
-  
-  // Smoothing
+  // Smooth
   state.smoothedPunch = lerp(state.smoothedPunch, punchAccel, CONFIG.SMOOTHING_FACTOR);
   const smoothed = state.smoothedPunch;
-  
-  // Jerk in punch direction
   const jerk = Math.abs((smoothed - state.lastPunchAccel) / dt);
   state.lastPunchAccel = smoothed;
+  const gyroMag = gyro ? Math.sqrt(gyro.x**2 + gyro.y**2 + gyro.z**2) : 0;
   
-  // Gyroscope magnitude (for rotation filtering)
-  const gyroMag = gyro ? Math.sqrt(gyro.x*gyro.x + gyro.y*gyro.y + gyro.z*gyro.z) : 0;
+  updateStats(smoothed, jerk, gyroMag, state.mode==='idle');
   
-  // Update stats
-  updateStats(smoothed, jerk, gyroMag, state.mode === 'idle');
-  
-  // ===== ROTATION FILTERING =====
-  // If gyro is high but punch accel is moderate, it's likely a rotation, not a punch
+  // Rotation filter (very lenient now)
   const isRotation = gyroMag > CONFIG.GYRO_ROTATION_THRESHOLD && 
-                     Math.abs(smoothed) < state.punchThreshold * 1.5 &&
+                     Math.abs(smoothed) < state.punchThreshold &&
                      gyroMag > Math.abs(smoothed) * CONFIG.GYRO_PUNCH_RATIO;
+  if (isRotation) return;
   
-  if (isRotation) {
-    // Ignore this event - it's a rotation, not a punch
-    return;
-  }
-  
-  // ===== PUNCH DETECTION =====
-  // Only detect punches in the calibrated forward direction
+  // Punch detection (forgiving)
   if (state.mode === 'idle' && 
-      smoothed > state.punchThreshold &&  // Forward acceleration threshold
-      jerk > CONFIG.MIN_JERK &&            // Must be sudden (high jerk)
-      gyroMag < CONFIG.GYRO_ROTATION_THRESHOLD * 1.5) { // Not a violent rotation
+      smoothed > state.punchThreshold * 0.85 &&  // Lower threshold
+      jerk > CONFIG.MIN_JERK * 0.8) {             // Lower jerk requirement
     
     state.mode = 'recording';
-    state.windowData = [];
-    state.windowStart = t;
-    state.metrics = { punch: 0, jerk: 0, impulse: 0, gyro: 0 };
-    
-    // Visual feedback
-    triggerGlovePunch();
-    updateStatus('💥 Vuruş Algılandı!', true);
-    
-    // Pre-haptic
-    if (navigator.vibrate) navigator.vibrate([18, 10, 30]);
+    state.windowData = []; state.windowStart = t;
+    state.metrics = {punch:0,jerk:0,impulse:0,gyro:0};
+    triggerEffects();
+    updateStatus('💥 Algılandı!', true);
+    if (navigator.vibrate) navigator.vibrate([15,8,25]);
   }
   
-  // RECORDING: Collect punch window
+  // Recording
   if (state.mode === 'recording') {
-    state.windowData.push({ t, punch: smoothed, jerk, gyro: gyroMag });
-    
-    // Track metrics
+    state.windowData.push({t, punch:smoothed, jerk, gyro:gyroMag});
     state.metrics.punch = Math.max(state.metrics.punch, smoothed);
     state.metrics.jerk = Math.max(state.metrics.jerk, jerk);
     state.metrics.gyro = Math.max(state.metrics.gyro, gyroMag);
-    if (smoothed > 1) state.metrics.impulse += smoothed * dt;
-    
-    // End window
-    if (t - state.windowStart >= CONFIG.PUNCH_WINDOW) {
-      processPunch();
-    }
+    if (smoothed > 0.5) state.metrics.impulse += smoothed * dt;
+    if (t - state.windowStart >= CONFIG.PUNCH_WINDOW) processPunch();
   }
 }
 
-// ====== PUNCH PROCESSING ======
+// ====== SCORING - FIXED ======
+function calculateScore(m) {
+  // LINEAR scoring for 0-3000 range (forgiving for weak punches)
+  // EXPONENTIAL for 3000-9999 (hard to reach top scores)
+  
+  const linearPart = 
+    m.punch * CONFIG.SCORE_PUNCH_WEIGHT +
+    m.jerk * CONFIG.SCORE_JERK_WEIGHT +
+    m.impulse * CONFIG.SCORE_IMPULSE_WEIGHT;
+  
+  let score;
+  if (linearPart < CONFIG.SCORE_SOFT_CAP) {
+    // Linear: every unit of "power" = direct points
+    score = linearPart;
+  } else {
+    // Exponential growth above soft cap (harder to reach 9000+)
+    const excess = linearPart - CONFIG.SCORE_SOFT_CAP;
+    score = CONFIG.SCORE_SOFT_CAP + 
+            Math.pow(excess, CONFIG.SCORE_EXPONENT_HIGH) * 3;
+  }
+  
+  // Rotation penalty (mild)
+  if (m.gyro > CONFIG.GYRO_ROTATION_THRESHOLD) {
+    score *= 0.85; // Only 15% penalty
+  }
+  
+  // Minimum score guarantee: even weak punches get something
+  if (score < 100 && m.punch > CONFIG.PUNCH_AXIS_THRESHOLD * 0.7) {
+    score = 100 + (m.punch - CONFIG.PUNCH_AXIS_THRESHOLD * 0.7) * 50;
+  }
+  
+  return clamp(Math.floor(score), 0, CONFIG.SCORE_HARD_CAP);
+}
+
+// ====== PROCESS PUNCH - FIXED ======
 function processPunch() {
   state.mode = 'processing';
+  const data = state.windowData, m = state.metrics;
   
-  const data = state.windowData;
-  const m = state.metrics;
-  
-  // Validate
+  // Very forgiving validation
   if (data.length < CONFIG.MIN_SAMPLES) {
-    resetPunch('⚡ Çok hızlı!');
+    // Still give partial credit for near-misses
+    const partialScore = Math.floor(m.punch * 30);
+    if (partialScore >= 50) {
+      showScore(partialScore, '⚡ Kısa vuruş');
+      return;
+    }
+    showDebug('⚡ Çok kısa', 'warn');
+    resetPunch();
     return;
   }
   
-  // Rotation penalty: if gyro was high during punch, reduce score
-  const rotationPenalty = m.gyro > CONFIG.GYRO_ROTATION_THRESHOLD ? 0.6 : 1.0;
+  // Calculate score FIRST (before validation)
+  const score = calculateScore(m);
   
-  // Validation with rotation awareness
-  if (m.punch < CONFIG.PUNCH_AXIS_THRESHOLD) {
-    resetPunch('💪 Daha sert ileri vur!');
+  // Validation with helpful feedback
+  let rejected = null;
+  if (m.punch < CONFIG.PUNCH_AXIS_THRESHOLD * 0.7) rejected = '💪 Daha sert';
+  else if (m.jerk < CONFIG.MIN_JERK * 0.7) rejected = '⚡ Daha ani';
+  else if (m.impulse < CONFIG.MIN_IMPULSE * 0.7) rejected = '🎯 Takip ekle';
+  
+  if (rejected && score < 500) {
+    // Show why it failed, but still give minimal score if close
+    showDebug(`${rejected} (Peak: ${m.punch.toFixed(1)})`, 'warn');
+    if (score >= 100) {
+      showScore(score, rejected.replace('💪','👍').replace('⚡','⚠️').replace('🎯','📍'));
+      return;
+    }
+    resetPunch();
     return;
   }
-  if (m.jerk < CONFIG.MIN_JERK) {
-    resetPunch('⚡ Daha ani hareket et!');
-    return;
-  }
-  if (m.impulse < CONFIG.MIN_IMPULSE) {
-    resetPunch('🎯 Vuruşu tamamla!');
-    return;
-  }
   
-  // ===== GRIP-BASED SCORING =====
-  const weighted = 
-    m.punch * CONFIG.SCORE_PUNCH_WEIGHT +
-    m.jerk * CONFIG.SCORE_JERK_WEIGHT * 0.1 +
-    m.impulse * CONFIG.SCORE_IMPULSE_WEIGHT * 10;
-  
-  const rawScore = CONFIG.SCORE_SCALE * 
-    Math.pow(1 - Math.exp(-weighted / CONFIG.SCORE_DECAY), CONFIG.SCORE_EXPONENT);
-  
-  let finalScore = Math.floor(clamp(rawScore * rotationPenalty, 0, CONFIG.SCORE_SCALE));
-  
-  // Bonuses
-  if (m.punch > 22) finalScore = Math.min(9999, finalScore + 280);
-  if (m.jerk > 55) finalScore = Math.min(9999, finalScore + 200);
-  if (m.gyro < 1.0) finalScore = Math.min(9999, finalScore + 150); // Clean punch bonus
-  
-  // Update display
-  els.score.textContent = fmt(finalScore);
+  // Success!
+  showScore(score, '🔥 Mükemmel!');
+}
+
+function showScore(score, message) {
+  els.score.textContent = fmt(score);
   els.score.classList.add('punch');
   setTimeout(() => els.score.classList.remove('punch'), 300);
   
-  // ===== STRONG HAPTIC FEEDBACK =====
+  // Haptics
   if (navigator.vibrate) {
-    const base = CONFIG.VIBRATE_BASE;
-    const intensity = clamp(finalScore * CONFIG.VIBRATE_INTENSITY_SCALE, 25, 220);
-    const pattern = [
-      base[0], base[1],
-      Math.min(70, base[2] + intensity * 0.35),
-      base[3],
-      Math.min(140, base[4] + intensity * 0.55)
-    ];
-    navigator.vibrate(pattern);
+    const intensity = clamp(score * CONFIG.VIBRATE_INTENSITY_SCALE, 15, 180);
+    navigator.vibrate([
+      CONFIG.VIBRATE_BASE[0], CONFIG.VIBRATE_BASE[1],
+      Math.min(55, CONFIG.VIBRATE_BASE[2] + intensity*0.3),
+      CONFIG.VIBRATE_BASE[3],
+      Math.min(100, CONFIG.VIBRATE_BASE[4] + intensity*0.45)
+    ]);
   }
   
   // History
-  addToHistory(finalScore);
-  updateStatus(`🔥 ${finalScore} - Mükemmel vuruş!`);
+  addToHistory(score);
+  updateStatus(`${message} ${score}`);
+  showDebug(`🎯 Skor: ${score} • P:${m.punch.toFixed(1)} J:${Math.floor(m.jerk)}`);
   
   // Cooldown
   state.mode = 'cooldown';
-  setTimeout(() => {
-    state.mode = 'idle';
-    resetPunchState();
-    updateStatus('✅ Hazır - Tekrar vur!');
-  }, CONFIG.COOLDOWN);
+  setTimeout(() => { state.mode = 'idle'; resetPunchState(); updateStatus('✅ Hazır'); }, CONFIG.COOLDOWN);
 }
 
-function resetPunch(msg) {
-  updateStatus(msg || '✅ Hazır');
+function resetPunch() {
+  updateStatus('✅ Hazır');
   resetPunchState();
 }
 
 function resetPunchState() {
-  state.mode = 'idle';
-  state.windowData = [];
-  state.metrics = { punch: 0, jerk: 0, impulse: 0, gyro: 0 };
-  state.lastPunchAccel = 0;
-  state.smoothedPunch = 0;
+  state.mode = 'idle'; state.windowData = [];
+  state.metrics = {punch:0,jerk:0,impulse:0,gyro:0};
+  state.lastPunchAccel = 0; state.smoothedPunch = 0;
 }
 
 // ====== HISTORY ======
 function addToHistory(score) {
-  state.history.unshift({ score, time: new Date() });
+  state.history.unshift({score, time:new Date()});
   if (state.history.length > CONFIG.MAX_HISTORY) state.history.pop();
-  
   if (score > state.bestScore) {
     state.bestScore = score;
     localStorage.setItem('punchPro_best', score);
@@ -1096,47 +756,35 @@ function renderHistory() {
   els.historyList.innerHTML = '';
   state.history.forEach(item => {
     const div = document.createElement('div');
-    const isBest = item.score === state.bestScore && state.history.length > 1;
-    div.className = 'history-item' + (isBest ? ' best' : '');
-    div.innerHTML = `
-      <div class="history-score">${fmt(item.score)}</div>
-      <div class="history-time">${item.time.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>
-      ${isBest ? '<span class="history-best-badge">⭐ EN İYİ</span>' : ''}
-    `;
+    const best = item.score === state.bestScore && state.history.length > 1;
+    div.className = 'history-item' + (best ? ' best' : '');
+    div.innerHTML = `<div class="history-score">${fmt(item.score)}</div><div class="history-time">${item.time.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>`;
     els.historyList.appendChild(div);
   });
 }
 
-// ====== PERMISSION & START ======
+// ====== START/PERMISSION ======
 async function requestPermission() {
-  if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+  if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
     els.httpsWarning.classList.add('show');
   }
-  
   if (typeof DeviceMotionEvent !== 'undefined' && DeviceMotionEvent.requestPermission) {
-    try {
-      const result = await DeviceMotionEvent.requestPermission();
-      return result === 'granted';
-    } catch(e) { return false; }
+    try { return (await DeviceMotionEvent.requestPermission()) === 'granted'; }
+    catch(e) { return false; }
   }
   return true;
 }
 
 async function startSensors() {
-  els.startBtn.disabled = true;
-  els.startBtn.textContent = 'Başlatılıyor...';
-  
+  els.startBtn.disabled = true; els.startBtn.textContent = 'Başlatılıyor...';
   const granted = await requestPermission();
   if (!granted) {
     els.permissionModal.classList.remove('hidden');
-    els.startBtn.disabled = false;
-    els.startBtn.textContent = '🚀 Başlat';
-    updateStatus('❌ İzin gerekli');
-    return;
+    els.startBtn.disabled = false; els.startBtn.textContent = '🚀 Başlat';
+    updateStatus('❌ İzin gerekli'); return;
   }
-  
   state.permissionGranted = true;
-  window.addEventListener('devicemotion', handleMotion, { passive: true });
+  window.addEventListener('devicemotion', handleMotion, {passive:true});
   state.sensorsReady = true;
   
   // Load saved calibration
@@ -1144,145 +792,85 @@ async function startSensors() {
   if (saved) {
     try {
       const cal = JSON.parse(saved);
-      state.punchAxis = cal.punchAxis;
-      state.punchDirection = cal.punchDirection;
-      state.baseline = cal.baseline;
-      state.punchThreshold = cal.punchThreshold;
+      state.punchAxis = cal.punchAxis; state.punchDirection = cal.punchDirection;
+      state.baseline = cal.baseline; state.punchThreshold = cal.punchThreshold;
       state.calibrated = true;
       updateCalibrationBadge();
-      updateStatus('✅ Hazır - İleri doğru vur!');
-    } catch(e) {
-      updateStatus('🤚 Kalibrasyon ile daha iyi sonuç!');
-    }
-  } else {
-    updateStatus('🤚 Yumruk pozisyonunda kalibre et!');
-  }
+      updateStatus('✅ Hazır - Vur!');
+      showDebug('✅ Kayıtlı kalibrasyon yüklendi');
+    } catch(e) { updateStatus('🤚 Kalibre et'); }
+  } else { updateStatus('🤚 Kalibre et'); }
   
   state.bestScore = parseInt(localStorage.getItem('punchPro_best')) || 0;
-  if (state.bestScore > 0) {
-    els.bestBadge.textContent = `• En İyi: ${fmt(state.bestScore)}`;
-  }
+  if (state.bestScore > 0) els.bestBadge.textContent = `• En İyi: ${fmt(state.bestScore)}`;
   renderHistory();
-  
   els.startBtn.textContent = '✓ Aktif';
-  els.startBtn.style.background = 'linear-gradient(135deg, #15803d, #166534)';
 }
 
-// ====== TEST PUNCH ======
+// ====== TEST ======
 function testPunch() {
-  if (!state.calibrated) {
-    updateStatus('⚠️ Önce kalibre et');
-    return;
-  }
+  if (!state.calibrated) { showDebug('⚠️ Önce kalibre et', 'warn'); return; }
+  state.mode = 'recording'; state.windowData = []; state.windowStart = now();
   
-  state.mode = 'recording';
-  state.windowData = [];
-  state.windowStart = now();
-  
-  // Simulate realistic punch in calibrated direction
-  const basePunch = 16 + Math.random() * 14;
-  const baseJerk = 30 + Math.random() * 45;
-  
-  for (let i = 0; i < 10; i++) {
-    const t = now() + i * 16;
-    const progress = i / 10;
-    const factor = Math.sin(progress * Math.PI) * (0.75 + Math.random() * 0.25);
+  // Simulate realistic punch
+  const basePunch = 12 + Math.random()*18; // 12-30 m/s²
+  const baseJerk = 20 + Math.random()*50;
+  for (let i=0; i<10; i++) {
+    const f = Math.sin((i/10)*Math.PI) * (0.7+Math.random()*0.3);
     state.windowData.push({
-      t,
-      punch: basePunch * factor,
-      jerk: baseJerk * factor * (0.6 + Math.random() * 0.4),
-      gyro: 0.3 + Math.random() * 0.5  // Low gyro = clean punch
+      t: now()+i*18, punch: basePunch*f, jerk: baseJerk*f,
+      gyro: 0.5 + Math.random()*1.5
     });
   }
+  state.metrics = { punch: basePunch*0.9, jerk: baseJerk*0.85, impulse: 0.5+Math.random()*1.5, gyro: 1.2 };
   
-  state.metrics = {
-    punch: basePunch * 0.92,
-    jerk: baseJerk * 0.88,
-    impulse: 0.7 + Math.random() * 1.2,
-    gyro: 0.6
-  };
-  
-  triggerGlovePunch();
-  updateStatus('🧪 Test vuruşu...', true);
-  if (navigator.vibrate) navigator.vibrate([20, 12, 35]);
-  
-  setTimeout(processPunch, 150);
+  triggerEffects(); updateStatus('🧪 Test...', true);
+  if (navigator.vibrate) navigator.vibrate([15,8,30]);
+  setTimeout(processPunch, 160);
 }
 
 // ====== RESET ======
 function resetAll() {
   if (confirm('Tüm veriler silinsin mi?')) {
-    localStorage.removeItem('punchPro_cal');
-    localStorage.removeItem('punchPro_best');
-    
-    state.history = [];
-    state.bestScore = 0;
-    state.punchAxis = null;
-    state.punchDirection = 1;
-    state.baseline = { x: 0, y: 0, z: 0 };
-    state.punchThreshold = 10;
+    localStorage.removeItem('punchPro_cal'); localStorage.removeItem('punchPro_best');
+    state.history = []; state.bestScore = 0;
+    state.punchAxis = null; state.punchDirection = 1;
+    state.baseline = {x:0,y:0,z:0}; state.punchThreshold = 8;
     state.calibrated = false;
-    
-    els.score.textContent = '0000';
-    els.bestBadge.textContent = '';
-    updateCalibrationBadge();
-    renderHistory();
-    resetPunchState();
-    updateStatus('🔄 Her şey sıfırlandı');
-    
-    els.startBtn.textContent = '🚀 Başlat';
-    els.startBtn.style.background = '';
+    els.score.textContent = '0000'; els.bestBadge.textContent = '';
+    updateCalibrationBadge(); renderHistory(); resetPunchState();
+    updateStatus('🔄 Sıfırlandı'); els.startBtn.textContent = '🚀 Başlat';
   }
 }
 
-// ====== EVENT LISTENERS ======
-els.startBtn.addEventListener('click', startSensors);
-els.calibrateBtn.addEventListener('click', calibrate);
-els.testBtn.addEventListener('click', testPunch);
-els.resetBtn.addEventListener('click', resetAll);
-
-document.getElementById('grantPermission').addEventListener('click', async () => {
+// ====== EVENTS ======
+els.startBtn.onclick = startSensors;
+els.calibrateBtn.onclick = calibrate;
+els.testBtn.onclick = testPunch;
+els.resetBtn.onclick = resetAll;
+document.getElementById('grantPermission').onclick = async () => {
+  els.permissionModal.classList.add('hidden'); await startSensors();
+};
+document.getElementById('denyPermission').onclick = () => {
   els.permissionModal.classList.add('hidden');
-  await startSensors();
-});
+  els.startBtn.disabled = false; els.startBtn.textContent = '🚀 Başlat';
+};
+document.getElementById('cancelCalibration').onclick = () => {
+  els.calibrationOverlay.classList.add('hidden'); updateStatus('⚠️ İptal');
+};
 
-document.getElementById('denyPermission').addEventListener('click', () => {
-  els.permissionModal.classList.add('hidden');
-  els.startBtn.disabled = false;
-  els.startBtn.textContent = '🚀 Başlat';
-});
-
-document.getElementById('cancelCalibration').addEventListener('click', () => {
-  els.calibrationOverlay.classList.add('hidden');
-  updateStatus('⚠️ İptal edildi');
-});
-
-// Prevent zoom/scroll
-document.addEventListener('touchstart', (e) => {
-  if (e.touches.length > 1) e.preventDefault();
-}, { passive: false });
-
+// Prevent zoom
+document.addEventListener('touchstart', e => { if(e.touches.length>1) e.preventDefault(); }, {passive:false});
 let lastTouchEnd = 0;
-document.addEventListener('touchend', (e) => {
-  const n = Date.now();
-  if (n - lastTouchEnd <= 300) e.preventDefault();
-  lastTouchEnd = n;
-}, { passive: false });
+document.addEventListener('touchend', e => {
+  const n = Date.now(); if(n - lastTouchEnd <= 300) e.preventDefault(); lastTouchEnd = n;
+}, {passive:false});
 
-// ====== INIT ======
-updateStatus('📱 "Başlat" ile başla');
-updateCalibrationBadge();
-
+// Init
+updateStatus('📱 "Başlat" ile başla'); updateCalibrationBadge();
 if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !state.permissionGranted) {
   els.permissionModal.classList.remove('hidden');
 }
-
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden && state.mode === 'recording') {
-    resetPunchState();
-    updateStatus('⏸️ Duraklatıldı');
-  }
-});
 </script>
 </body>
 </html>
